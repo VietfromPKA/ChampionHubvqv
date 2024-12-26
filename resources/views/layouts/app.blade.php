@@ -8,6 +8,8 @@
     <title>Quản Lý Giải Đấu - CHAMPIONHUB</title>
     <!-- Đảm bảo đường dẫn đúng tới file CSS -->
     <link rel="stylesheet" href="{{ asset('./css/app.css') }}">
+    @yield('styles')
+
 </head>
 
 <body>
@@ -20,7 +22,7 @@
                 <li><a href="">Trang chủ</a></li>
                 <li><a href="">Giải đang diễn ra</a></li>
                 <li><a href="">Giải đang theo dõi</a></li>
-                <li><a href="">Quản lý Giải đấu</a></li>
+                <li><a href="{{ route('tournament.index') }}">Quản lý Giải đấu</a></li>
                 <li><a href="">Đội bóng</a></li>
                 <li><a href="">Tin tức</a></li>
                 <li><a href="{{ route('login')}}">Đăng nhập</a></li>
