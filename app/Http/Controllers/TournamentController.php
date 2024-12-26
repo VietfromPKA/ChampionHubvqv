@@ -55,4 +55,13 @@ class TournamentController extends Controller
         $tournament->delete();
         return redirect()->route('tournament.index');
     }
+
+    public function show($id)
+    {
+        // Lấy thông tin giải đấu cùng các đội bóng liên quan
+        $tournament = Tournament::with('teams')->findOrFail($id);
+
+        // Trả về view với thông tin
+        return view('tournaments.show', compact('tournament'));
+    }
 }

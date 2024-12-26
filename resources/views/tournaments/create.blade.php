@@ -1,22 +1,32 @@
 @extends('layouts.app')
 @section('styles')
-    <link href="{{ asset('css/qlygiaidau.css') }}" rel="stylesheet">
+<link href="{{ asset('css/qlygiaidau.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <h1>Tạo mới giải đấu</h1>
+<div class="container create-tournament">
+    <h1 class="page-title">Tạo mới giải đấu</h1>
 
-    <form action="{{ route('tournament.store') }}" method="POST">
+    <form action="{{ route('tournament.store') }}" method="POST" class="tournament-form">
         @csrf
-        <label for="name">Tên giải đấu:</label>
-        <input type="text" name="name" id="name" required>
 
-        <label for="start_date">Ngày bắt đầu:</label>
-        <input type="date" name="start_date" id="start_date" required>
+        <div class="form-group">
+            <label for="name" class="form-label">Tên giải đấu:</label>
+            <input type="text" name="name" id="name" class="form-input" required>
+        </div>
 
-        <label for="end_date">Ngày kết thúc:</label>
-        <input type="date" name="end_date" id="end_date" required>
+        <div class="form-group">
+            <label for="start_date" class="form-label">Ngày bắt đầu:</label>
+            <input type="date" name="start_date" id="start_date" class="form-input" required>
+        </div>
 
-        <button type="submit">Lưu</button>
+        <div class="form-group">
+            <label for="end_date" class="form-label">Ngày kết thúc:</label>
+            <input type="date" name="end_date" id="end_date" class="form-input" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Lưu</button>
     </form>
+
+</div>
 @endsection

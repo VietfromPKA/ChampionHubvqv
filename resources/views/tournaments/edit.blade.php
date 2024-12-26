@@ -1,26 +1,35 @@
 @extends('layouts.app')
 @section('styles')
-    <link href="{{ asset('css/qlygiaidau.css') }}" rel="stylesheet">
+<link href="{{ asset('css/qlygiaidau.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="container">
-        <h1>Sửa giải đấu</h1>
+<div class="container edit-tournament">
+    <h1 class="page-title">Sửa giải đấu</h1>
 
-        <form action="{{ route('tournament.update', $tournament->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('tournament.update', $tournament->id) }}" method="POST" class="tournament-form">
+        @csrf
+        @method('PUT')
 
-            <label for="name">Tên giải đấu:</label>
-            <input type="text" name="name" id="name" value="{{ $tournament->name }}" required>
+        <div class="form-group">
+            <label for="name" class="form-label">Tên giải đấu:</label>
+            <input type="text" name="name" id="name" class="form-input" value="{{ $tournament->name }}" required>
+        </div>
 
-            <label for="start_date">Ngày bắt đầu:</label>
-            <input type="date" name="start_date" id="start_date" value="{{ $tournament->start_date }}" required>
+        <div class="form-group">
+            <label for="start_date" class="form-label">Ngày bắt đầu:</label>
+            <input type="date" name="start_date" id="start_date" class="form-input"
+                value="{{ $tournament->start_date }}" required>
+        </div>
 
-            <label for="end_date">Ngày kết thúc:</label>
-            <input type="date" name="end_date" id="end_date" value="{{ $tournament->end_date }}" required>
+        <div class="form-group">
+            <label for="end_date" class="form-label">Ngày kết thúc:</label>
+            <input type="date" name="end_date" id="end_date" class="form-input" value="{{ $tournament->end_date }}"
+                required>
+        </div>
 
-            <button type="submit">Cập nhật</button>
-        </form>
-    </div>
+        <button type="submit" class="btn-submit">Cập nhật</button>
+    </form>
+
+</div>
 @endsection

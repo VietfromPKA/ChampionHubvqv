@@ -121,3 +121,163 @@ button:focus {
 button:active {
     transform: scale(0.98);
 }
+.tournament-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px; /* Khoảng cách giữa label và input */
+}
+
+.form-label {
+    width: 150px; /* Đặt chiều rộng cố định cho label */
+    text-align: right; /* Căn label sang phải */
+    font-weight: bold;
+    color: #555;
+}
+
+.form-input {
+    flex: 1; /* Input sẽ chiếm phần còn lại của không gian */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.btn-submit {
+    align-self: center; /* Căn nút giữa form */
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/* General tournament details */
+.tournament-details {
+    margin: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.tournament-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #3182ce;
+    padding-bottom: 5px;
+}
+
+.tournament-date, .team-count {
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin-bottom: 15px;
+}
+
+/* Team list title */
+.team-list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3182ce;
+    margin-top: 20px;
+    border-bottom: 2px solid #3182ce;
+    padding-bottom: 5px;
+}
+
+/* No teams message */
+.no-teams {
+    font-size: 1.2rem;
+    color: #e53e3e;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Team list styles */
+.team-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.team-item {
+    background-color: #f7fafc;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: background-color 0.3s ease;
+}
+
+.team-item:hover {
+    background-color: #edf2f7;
+}
+
+.team-name, .coach-name {
+    font-weight: bold;
+    color: #2b6cb0;
+}
+
+.coach-name {
+    color: #48bb78;
+}
+
+/* Back link */
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #3182ce;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 2px solid #3182ce;
+    border-radius: 5px;
+    background-color: #f7fafc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #3182ce;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tournament-details {
+        margin: 10px;
+    }
+
+    .tournament-title {
+        font-size: 2rem;
+    }
+
+    .team-list-title {
+        font-size: 1.3rem;
+    }
+
+    .team-item {
+        padding: 10px;
+    }
+
+    .back-link {
+        font-size: 1rem;
+    }
+}
