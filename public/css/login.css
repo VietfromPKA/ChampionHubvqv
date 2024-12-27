@@ -1,12 +1,3 @@
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff; /* Hoặc màu bạn muốn */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Để tạo bóng cho header */
-    z-index: 1000; /* Đảm bảo header nằm trên cùng */
-  }
 main {
     display: flex;
     align-items: center;
@@ -18,7 +9,7 @@ main {
   
   main::before {
     content: "";
-    position: absolute;
+    position: absolute; /* Tạo một lớp tuyệt đối */
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/nenlogin.svg");

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
 
@@ -31,6 +32,14 @@ Route::get('/signin', function () {
     return view('auth.signin'); // Trả về view 'signin'
 })->name('signin');
 
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/signin', [AuthController::class, 'showRegisterForm'])->name('signin');
+Route::post('/signin', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
 Route::resource('tournaments', TournamentController::class);
 Route::prefix('tournament')->name('tournament.')->group(function() {
     Route::get('/', [TournamentController::class, 'index'])->name('index');
@@ -49,4 +58,8 @@ Route::prefix('team')->name('team.')->group(function() {
     Route::get('{id}/edit', [TeamController::class, 'edit'])->name('edit'); // Sửa đội bóng
     Route::put('{id}', [TeamController::class, 'update'])->name('update'); // Cập nhật đội bóng
     Route::delete('{id}', [TeamController::class, 'destroy'])->name('destroy'); // Xóa đội bóng
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');
 });

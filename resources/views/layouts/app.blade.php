@@ -1,4 +1,3 @@
-<!-- resources/views/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,38 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Giải Đấu - CHAMPIONHUB</title>
-    <!-- Đảm bảo đường dẫn đúng tới file CSS -->
     <link rel="stylesheet" href="{{ asset('./css/app.css') }}">
     @yield('styles')
-    
-
 </head>
 
-<body>
-<header>
-    <nav>
-        <a href="/">
-            <img src="{{ asset('images/logoWA.svg') }}" alt="Logo" id="logo">
-        </a>
-        <ul>
-            <li><a href="">Trang chủ</a></li>
-            <li><a href="">Giải đang diễn ra</a></li>
-            <li><a href="">Giải đang theo dõi</a></li>
-            <li><a href="{{ route('tournament.index') }}">Quản lý Giải đấu</a></li>
-            <li><a href="{{ route('team.index') }}">Quản lý Đội bóng</a></li> <!-- Đảm bảo dùng team.index -->
-            <li><a href="">Tin tức</a></li>
-            <li><a href="{{ route('login') }}">Đăng nhập</a></li>
-            <li><a href="{{ route('signin') }}">Đăng ký</a></li>
-        </ul>
-    </nav>
-</header>
+<body class="body">
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="navbar-logo">
+                <img src="{{ asset('images/logoWA.svg') }}" alt="Logo" id="logo">
+            </a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="/" class="navbar-link">Trang chủ</a></li>
+                <li class="navbar-item"><a href="" class="navbar-link">Giải đang diễn ra</a></li>
+                <li class="navbar-item"><a href="" class="navbar-link">Giải đang theo dõi</a></li>
+                <li class="navbar-item"><a href="{{ route('tournament.index') }}" class="navbar-link">Quản lý Giải đấu</a></li>
+                <li class="navbar-item"><a href="{{ route('team.index') }}" class="navbar-link">Quản lý Đội bóng</a></li>
+                <li class="navbar-item"><a href="" class="navbar-link">Tin tức</a></li>
+                <li class="navbar-item"><a href="{{ route('login') }}" class="navbar-link">Đăng nhập</a></li>
+                <li class="navbar-item"><a href="{{ route('signin') }}" class="navbar-link">Đăng ký</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <main>
-        <!-- Đây là nơi nội dung của các view khác sẽ được chèn vào -->
-        @yield('content')
+    <main class="main">
+        <div class="container">
+            @yield('content')
+        </div>
     </main>
 
-    <footer>
+    <footer class="footer">
         <p>&copy; 2024 CHAMPIONHUB</p>
     </footer>
 </body>
