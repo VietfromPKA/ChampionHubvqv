@@ -2,52 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\Tournament;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
-    // Hiển thị danh sách đội bóng
     public function index()
     {
-        $teams = Team::all(); // Lấy tất cả đội bóng từ cơ sở dữ liệu
+        // Lấy đội bóng của người dùng hiện tại và bao gồm cả thông tin giải đấu
+        $teams = Auth::user()->teams()->with('tournament')->get(); 
         return view('teams.index', compact('teams'));
     }
 
-    // Hiển thị form thêm đội bóng
     public function create()
     {
-        $tournaments = Tournament::all(); // Lấy danh sách giải đấu
+        // Lấy tất cả giải đấu để hiển thị trong form tạo đội bóng
+        $tournaments = Tournament::all();
         return view('teams.create', compact('tournaments'));
     }
 
-    // Lưu đội bóng mới vào cơ sở dữ liệu
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'coach_name' => 'nullable|string|max:255',
-            'tournament_id' => 'required|exists:tournaments,id',
+            'tournament_id' => 'required|exists:tournaments,id', // Kiểm tra giải đấu hợp lệ
         ]);
 
-        Team::create($request->all());
+        // Tạo đội bóng mới
+        $team = new Team();
+        $team->name = $request->name;
+        $team->coach_name = $request->coach_name;
+        $team->user_id = Auth::id(); // Liên kết đội bóng với người dùng hiện tại
+        $team->tournament_id = $request->tournament_id; // Liên kết đội bóng với giải đấu
+        $team->save();
 
-        return redirect()->route('team.index')->with('success', 'Đội bóng đã được thêm thành công!');
+        return redirect()->route('team.index')->with('success', 'Đội bóng đã được thêm.');
     }
 
-    // Hiển thị form sửa đội bóng
     public function edit($id)
     {
-        $team = Team::findOrFail($id);  // Tìm đội bóng theo id
-        $tournaments = Tournament::all();  // Lấy danh sách giải đấu
-
+        // Lấy đội bóng của người dùng hiện tại và thông tin giải đấu
+        $team = Auth::user()->teams()->findOrFail($id);
+        $tournaments = Tournament::all();
         return view('teams.edit', compact('team', 'tournaments'));
     }
 
-
-    // Cập nhật đội bóng
-    public function update(Request $request, Team $team)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -55,21 +59,22 @@ class TeamController extends Controller
             'tournament_id' => 'required|exists:tournaments,id',
         ]);
 
-        $team->update($request->all());
+        // Cập nhật đội bóng
+        $team = Auth::user()->teams()->findOrFail($id);
+        $team->name = $request->name;
+        $team->coach_name = $request->coach_name;
+        $team->tournament_id = $request->tournament_id;
+        $team->save();
 
-        return redirect()->route('team.index')->with('success', 'Đội bóng đã được cập nhật thành công!');
+        return redirect()->route('team.index')->with('success', 'Đội bóng đã được cập nhật.');
     }
 
     public function destroy($id)
-{
-    // Tìm đội bóng theo ID, nếu không tìm thấy thì trả về lỗi 404
-    $team = Team::findOrFail($id);
+    {
+        // Xóa đội bóng của người dùng hiện tại
+        $team = Auth::user()->teams()->findOrFail($id);
+        $team->delete();
 
-    // Xóa đội bóng
-    $team->delete();
-
-    // Chuyển hướng lại danh sách đội bóng với thông báo thành công
-    return redirect()->route('team.index')->with('success', 'Đội bóng đã được xóa thành công!');
-}
-
+        return redirect()->route('team.index')->with('success', 'Đội bóng đã được xóa.');
+    }
 }

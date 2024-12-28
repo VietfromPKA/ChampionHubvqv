@@ -12,11 +12,17 @@ class Team extends Model
     protected $fillable = [
         'name',
         'coach_name',
+        'user_id',
         'tournament_id',
     ];
+    public function user(){
+        return $this->belongsTo(User::class); // mỗi đội bóng thuộc về một người dùng
+    }
 
     public function tournament()
     {
         return $this->belongsTo(Tournament::class);
     }
+
+    
 }

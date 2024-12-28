@@ -10,6 +10,8 @@ class CreateTournamentsTable extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable(); // Loại bỏ after('id')
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->string('name');
             $table->date('start_date');
             $table->date('end_date');
@@ -17,9 +19,16 @@ class CreateTournamentsTable extends Migration
         });
     }
 
+
     public function down()
     {
+        Schema::table('tournaments', function (Blueprint $table) {
+            // Xóa khóa ngoại trước khi xóa bảng
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('tournaments');
     }
+
 }
 

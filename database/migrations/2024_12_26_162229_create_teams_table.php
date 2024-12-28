@@ -12,6 +12,7 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('coach_name')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // liên kết với bảng user
             $table->foreignId('tournament_id')->constrained()->onDelete('cascade'); // Liên kết với bảng tournaments
             $table->timestamps();
         });

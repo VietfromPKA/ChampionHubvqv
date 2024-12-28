@@ -12,8 +12,11 @@ class Tournament extends Model
     protected $fillable = ['name', 'start_date', 'end_date'];
 
     public function teams()
-{
-    return $this->hasMany(Team::class);
-}
+    {
+        return $this->hasMany(Team::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);//
+    }
 
 }

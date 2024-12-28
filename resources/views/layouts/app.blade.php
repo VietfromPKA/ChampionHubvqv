@@ -19,12 +19,31 @@
                 <li class="navbar-item"><a href="/" class="navbar-link">Trang chủ</a></li>
                 <li class="navbar-item"><a href="" class="navbar-link">Giải đang diễn ra</a></li>
                 <li class="navbar-item"><a href="" class="navbar-link">Giải đang theo dõi</a></li>
-                <li class="navbar-item"><a href="{{ route('tournament.index') }}" class="navbar-link">Quản lý Giải đấu</a></li>
-                <li class="navbar-item"><a href="{{ route('team.index') }}" class="navbar-link">Quản lý Đội bóng</a></li>
+                <li class="navbar-item"><a href="{{ route('tournament.index') }}" class="navbar-link">Giải
+                        đấu</a></li>
+                <li class="navbar-item"><a href="{{ route('team.index') }}" class="navbar-link">Đội bóng</a>
+                </li>
                 <li class="navbar-item"><a href="" class="navbar-link">Tin tức</a></li>
-                <li class="navbar-item"><a href="{{ route('login') }}" class="navbar-link">Đăng nhập</a></li>
-                <li class="navbar-item"><a href="{{ route('signin') }}" class="navbar-link">Đăng ký</a></li>
+
+                @if(auth()->check())
+                    <!-- Hiển thị tên người dùng và nút Đăng xuất -->
+                    <li class="navbar-item">
+                        <span class="navbar-link">{{ auth()->user()->name }}</span>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ route('logout') }}" class="navbar-link"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @else
+                    <!-- Hiển thị Đăng nhập và Đăng ký nếu chưa đăng nhập -->
+                    <li class="navbar-item"><a href="{{ route('login') }}" class="navbar-link">Đăng nhập</a></li>
+                    <li class="navbar-item"><a href="{{ route('signin') }}" class="navbar-link">Đăng ký</a></li>
+                @endif
             </ul>
+
         </nav>
     </header>
 

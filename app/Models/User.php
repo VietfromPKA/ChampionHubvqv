@@ -30,4 +30,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tournament::class);
     }
+
+    public function teams(){
+        return $this->hasMany(Team::class); // một người ùng có thể chơi cho nhiều đội bóng
+    }
 }

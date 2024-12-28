@@ -41,6 +41,24 @@
             </tr>
         @endforeach
     </tbody>
-
+    <tbody>
+        @foreach ($tournaments as $tournament)
+            <tr class="tournament-row">
+                <td class="tournament-name">
+                    <a href="{{ route('tournaments.show', $tournament->id) }}" class="tournament-link">
+                        {{ $tournament->name }}
+                    </a>
+                </td>
+                <td class="tournament-start-date">{{ $tournament->start_date }}</td>
+                <td class="tournament-end-date">{{ $tournament->end_date }}</td>
+                <td class="action-buttons-cell">
+                    <!-- Liên kết "Xem chi tiết" -->
+                    <a href="{{ route('tournaments.show', $tournament->id) }}" class="view-details-link">Xem chi tiết</a>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
 </table>
+
+
 @endsection
