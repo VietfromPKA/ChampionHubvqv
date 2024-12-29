@@ -15,7 +15,8 @@ class Team extends Model
         'user_id',
         'tournament_id',
     ];
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class); // mỗi đội bóng thuộc về một người dùng
     }
 
@@ -24,5 +25,16 @@ class Team extends Model
         return $this->belongsTo(Tournament::class);
     }
 
-    
+    public function gamesAsTeam1()
+    {
+        return $this->hasMany(Game::class, 'team1_id');
+    }
+
+    public function gamesAsTeam2()
+    {
+        return $this->hasMany(Game::class, 'team2_id');
+    }
+
+
+
 }

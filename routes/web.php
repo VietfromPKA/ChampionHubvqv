@@ -1,59 +1,69 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GameController;
 
 /*
-|---------------------------------------------------------------------------
+|--------------------------------------------------------------------------
 | Web Routes
-|---------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| File định nghĩa các route của ứng dụng web.
 */
 
-Route::get('/', function () {
-    return view('home');
+// Trang chủ
+Route::get('/', fn() => view('home'));
+
+// Các route liên quan đến xác thực
+Route::prefix('auth')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); // Hiển thị form đăng nhập
+    Route::post('/login', [AuthController::class, 'login']); // Xử lý đăng nhập
+    Route::get('/signin', [AuthController::class, 'showRegisterForm'])->name('signin'); // Hiển thị form đăng ký
+    Route::post('/signin', [AuthController::class, 'register']); // Xử lý đăng ký
+    Route::post('/logout', fn() => tap(Auth::logout(), fn() => redirect('/')))->name('logout'); // Xử lý đăng xuất
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/signin', [AuthController::class, 'showRegisterForm'])->name('signin');
-Route::post('/signin', [AuthController::class, 'register']);
+// Các route liên quan đến giải đấu
+Route::resource('tournaments', TournamentController::class); // Định nghĩa các route CRUD cho giải đấu
+Route::get('/tournaments/all', [TournamentController::class, 'showAll'])->name('tournaments.all'); // Hiển thị tất cả giải đấu
 
-// Đăng xuất
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/'); // Quay về trang chủ sau khi đăng xuất
-})->name('logout');
-
-// Các route cho giải đấu
-Route::resource('tournaments', TournamentController::class);
-Route::prefix('tournament')->name('tournament.')->group(function() {
-    Route::get('/', [TournamentController::class, 'index'])->name('index');
-    Route::get('create', [TournamentController::class, 'create'])->name('create');
-    Route::post('store', [TournamentController::class, 'store'])->name('store');
-    Route::get('{id}/edit', [TournamentController::class, 'edit'])->name('edit');
-    Route::put('{id}', [TournamentController::class, 'update'])->name('update');
-    Route::delete('{id}', [TournamentController::class, 'destroy'])->name('destroy');
-    Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournaments.show');
+Route::prefix('tournament')->name('tournament.')->group(function () {
+    Route::get('/', [TournamentController::class, 'index'])->name('index'); // Hiển thị danh sách giải đấu
+    Route::get('create', [TournamentController::class, 'create'])->name('create'); // Hiển thị form tạo giải đấu
+    Route::post('store', [TournamentController::class, 'store'])->name('store'); // Lưu giải đấu mới
+    Route::get('{id}/edit', [TournamentController::class, 'edit'])->name('edit'); // Hiển thị form chỉnh sửa giải đấu
+    Route::put('{id}', [TournamentController::class, 'update'])->name('update'); // Cập nhật thông tin giải đấu
+    Route::delete('{id}', [TournamentController::class, 'destroy'])->name('destroy'); // Xóa giải đấu
+    Route::get('/{id}', [TournamentController::class, 'show'])->name('show'); // Hiển thị chi tiết giải đấu
 });
-// routes/web.php
-Route::get('/tournaments/all', [TournamentController::class, 'showAll'])->name('tournaments.all');
 
-
-// Các route cho đội bóng
-Route::prefix('team')->name('team.')->group(function() {
-    Route::get('/', [TeamController::class, 'index'])->name('index'); // Danh sách đội bóng
-    Route::get('create', [TeamController::class, 'create'])->name('create'); // Form thêm đội bóng
+Route::resource('games', GameController::class)->middleware('auth');
+// Các route liên quan đến đội bóng
+Route::prefix('team')->name('team.')->group(function () {
+    Route::get('/', [TeamController::class, 'index'])->name('index'); // Hiển thị danh sách đội bóng
+    Route::get('create', [TeamController::class, 'create'])->name('create'); // Hiển thị form tạo đội bóng
     Route::post('store', [TeamController::class, 'store'])->name('store'); // Lưu đội bóng mới
-    Route::get('{id}/edit', [TeamController::class, 'edit'])->name('edit'); // Sửa đội bóng
-    Route::put('{id}', [TeamController::class, 'update'])->name('update'); // Cập nhật đội bóng
+    Route::get('{id}/edit', [TeamController::class, 'edit'])->name('edit'); // Hiển thị form chỉnh sửa đội bóng
+    Route::put('{id}', [TeamController::class, 'update'])->name('update'); // Cập nhật thông tin đội bóng
     Route::delete('{id}', [TeamController::class, 'destroy'])->name('destroy'); // Xóa đội bóng
 });
 
-// Đảm bảo rằng người dùng phải đăng nhập mới được truy cập
+// Các route yêu cầu người dùng phải đăng nhập
 Route::middleware(['auth'])->group(function () {
-    Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');
-    Route::get('/teams', [TeamController::class, 'index'])->name('team.index');
+    Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index'); // Hiển thị danh sách giải đấu (yêu cầu đăng nhập)
+    Route::get('/teams', [TeamController::class, 'index'])->name('team.index'); // Hiển thị danh sách đội bóng (yêu cầu đăng nhập)
+});
+
+// Các route cho lịch thi đấu
+Route::prefix('games')->name('games.')->group(function () {
+    Route::get('/', [GameController::class, 'index'])->name('index'); // Danh sách tất cả các trận đấu
+    Route::get('create', [GameController::class, 'create'])->name('create'); // Form tạo trận đấu mới
+    Route::post('store', [GameController::class, 'store'])->name('store'); // Lưu thông tin trận đấu
+    Route::get('{id}', [GameController::class, 'show'])->name('show'); // Chi tiết trận đấu
+    Route::get('{id}/edit', [GameController::class, 'edit'])->name('edit'); // Form chỉnh sửa trận đấu
+    Route::put('{id}', [GameController::class, 'update'])->name('update'); // Cập nhật trận đấu
+    Route::delete('{id}', [GameController::class, 'destroy'])->name('destroy'); // Xóa trận đấu
 });

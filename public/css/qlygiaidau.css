@@ -211,13 +211,19 @@ button:active {
 
 /* Team list styles */
 .team-list {
-    list-style-type: none;
-    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     margin-top: 20px;
 }
-
+.team-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 .team-item {
     background-color: #f7fafc;
+    width: 30%;
     margin-bottom: 15px;
     padding: 15px;
     border-radius: 8px;
@@ -279,5 +285,95 @@ button:active {
 
     .back-link {
         font-size: 1rem;
+    }
+}
+/* Nút chỉnh sửa và tạo mới cho trận đấu */
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Các nút quay lại */
+.back-link {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #3182ce;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 2px solid #3182ce;
+    border-radius: 5px;
+    background-color: #f7fafc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #3182ce;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Bảng lịch thi đấu */
+.game-schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.game-schedule-table th,
+.game-schedule-table td {
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+}
+
+.game-schedule-table th {
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+}
+
+.game-schedule-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.game-schedule-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive Design cho bảng */
+@media (max-width: 768px) {
+    .game-schedule-table th, .game-schedule-table td {
+        padding: 8px 10px;
+    }
+
+    .team-item {
+        padding: 12px;
     }
 }

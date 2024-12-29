@@ -75,16 +75,18 @@ class TournamentController extends Controller
 
         return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được xóa.');
     }
+
     public function show($id)
     {
-        // Lấy thông tin giải đấu cùng các đội bóng liên quan (nếu có)
-        $tournament = Tournament::with('teams')->findOrFail($id);
+        $tournament = Tournament::with(['games', 'teams'])->findOrFail($id);
 
-        // Trả về view với thông tin giải đấu
+        // Kiểm tra nếu người dùng hiện tại là người tạo giải đấu
+        if ($tournament->user_id !== Auth::id()) {
+            return redirect()->route('tournament.index')->with('error', 'Bạn không có quyền xem hoặc chỉnh sửa giải đấu này.');
+        }
+
         return view('tournaments.show', compact('tournament'));
     }
-
-    // app/Http/Controllers/TournamentController.php
     public function showAll()
     {
         // Lấy tất cả các giải đấu
