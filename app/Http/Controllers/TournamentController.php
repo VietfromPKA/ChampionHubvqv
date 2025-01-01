@@ -64,7 +64,7 @@ class TournamentController extends Controller
         $tournament->end_date = $request->end_date;
         $tournament->save();
 
-        return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được cập nhật.');
+        return redirect()->route('tournament.index')->with('success', 'Giải đấu đã được cập nhật.');
     }
 
     // Xóa giải đấu
@@ -86,14 +86,6 @@ class TournamentController extends Controller
         }
 
         return view('tournaments.show', compact('tournament'));
-    }
-    public function showAll()
-    {
-        // Lấy tất cả các giải đấu
-        $tournaments = Tournament::all();
-
-        // Trả về view với danh sách các giải đấu
-        return view('tournaments.index', compact('tournaments'));
     }
 
 

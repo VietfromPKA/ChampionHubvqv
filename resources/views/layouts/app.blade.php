@@ -18,7 +18,8 @@
             <ul class="navbar-menu">
                 <li class="navbar-item"><a href="/" class="navbar-link">Trang chủ</a></li>
                 <li class="navbar-item"><a href="" class="navbar-link">Giải đang diễn ra</a></li>
-                <li class="navbar-item"><a href="{{ route('games.index') }}" class="navbar-link">Giải đang theo dõi</a></li>
+                <li class="navbar-item"><a href="{{ route('public.tournaments.index') }}" class="navbar-link">Giải đang
+                        theo dõi</a></li>
                 <li class="navbar-item"><a href="{{ route('tournament.index') }}" class="navbar-link">Giải
                         đấu</a></li>
                 <li class="navbar-item"><a href="{{ route('team.index') }}" class="navbar-link">Đội bóng</a>

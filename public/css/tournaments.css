@@ -1,0 +1,113 @@
+/* .container */
+.container {
+    max-width: 1200px; /* Giới hạn chiều rộng tối đa của container */
+    margin: 0 auto; /* Căn giữa container theo chiều ngang */
+    padding: 20px; /* Thêm khoảng cách 20px xung quanh container */
+}
+
+/* .title */
+.title {
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-bottom: 30px; /* Thêm khoảng cách dưới tiêu đề */
+    font-size: 1.2rem; /* Kích thước chữ của tiêu đề */
+    color: #333; /* Màu chữ của tiêu đề */
+}
+
+/* .tournament-list */
+.tournament-list {
+    display: flex; /* Sử dụng flexbox để tạo layout */
+    flex-wrap: wrap; /* Cho phép phần tử trong danh sách gói lại khi không đủ chỗ */
+    gap: 20px; /* Khoảng cách giữa các thẻ card */
+    justify-content: center; /* Căn giữa các thẻ card */
+}
+
+/* .tournament-card */
+.tournament-card {
+    background: #fff; /* Màu nền của card */
+    border: 1px solid #ddd; /* Đường viền của card */
+    border-radius: 10px; /* Bo tròn các góc của card */
+    width: 250px; /* Chiều rộng của card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho card */
+    overflow: hidden; /* Ẩn phần nội dung vượt ra ngoài */
+    transition: transform 0.3s; /* Hiệu ứng chuyển động khi hover */
+}
+
+/* Hiệu ứng hover trên .tournament-card */
+.tournament-card:hover {
+    transform: translateY(-10px); /* Dịch chuyển card lên trên khi hover */
+}
+
+/* .tournament-banner */
+.tournament-banner {
+    height: 150px; /* Chiều cao của banner */
+    overflow: hidden; /* Ẩn phần ảnh vượt quá chiều cao */
+}
+
+/* .banner-img */
+.banner-img {
+    width: 100%; /* Chiều rộng của ảnh bằng chiều rộng của banner */
+    height: auto; /* Giữ tỷ lệ chiều cao của ảnh */
+    object-fit: cover; /* Cắt ảnh sao cho vừa với khu vực */
+}
+
+/* .tournament-details */
+.tournament-details {
+    padding: 15px; /* Khoảng cách xung quanh nội dung */
+    text-align: center; /* Căn giữa nội dung */
+}
+
+/* .tournament-name */
+.tournament-name {
+    font-size: 1.5rem !important; /* Kích thước chữ của tên giải đấu */
+    font-weight: bold; /* Đậm chữ tên giải đấu */
+    color: #444; /* Màu chữ */
+    margin-bottom: 10px; /* Khoảng cách dưới tên giải đấu */
+}
+
+/* .tournament-date */
+.tournament-date {
+    font-size: 0.9rem !important; /* Kích thước chữ của ngày */
+}
+
+/* .tournament-type */
+.tournament-type {
+    color: #e74c3c; /* Màu đỏ cho loại giải đấu */
+    font-weight: bold; /* Đậm chữ loại giải đấu */
+    margin: 10px 0; /* Khoảng cách trên và dưới loại giải đấu */
+}
+
+/* .follow-btn */
+.follow-btn {
+    background: #e74c3c; /* Màu nền của nút */
+    color: #fff; /* Màu chữ của nút */
+    border: none; /* Không có viền */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    border-radius: 5px; /* Bo tròn các góc của nút */
+    cursor: pointer; /* Hiển thị con trỏ khi di chuột vào nút */
+    margin-bottom: 15px; /* Khoảng cách dưới nút */
+}
+
+/* Hiệu ứng hover trên nút follow-btn */
+.follow-btn:hover {
+    background: #c0392b; /* Thay đổi màu nền khi hover */
+}
+
+/* .tournament-meta */
+.tournament-meta {
+    display: flex; /* Sử dụng flexbox để bố trí các phần tử */
+    justify-content: space-between; /* Căn đều các phần tử trong meta */
+    align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+    font-size: 0.9rem; /* Kích thước chữ của meta */
+    color: #777; /* Màu chữ của meta */
+}
+
+/* .info-link */
+.info-link {
+    color: #3498db; /* Màu chữ của liên kết */
+    text-decoration: none; /* Không gạch dưới liên kết */
+}
+
+/* Hiệu ứng hover trên liên kết */
+.info-link:hover {
+    text-decoration: underline; /* Gạch dưới liên kết khi hover */
+}

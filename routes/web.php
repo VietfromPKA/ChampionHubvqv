@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\GameController;
-
+use App\Http\Controllers\PublicController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,3 +67,5 @@ Route::prefix('games')->name('games.')->group(function () {
     Route::put('{id}', [GameController::class, 'update'])->name('update'); // Cập nhật trận đấu
     Route::delete('{id}', [GameController::class, 'destroy'])->name('destroy'); // Xóa trận đấu
 });
+
+Route::get('/tournaments', [PublicController::class, 'index'])->name('public.tournaments.index');
