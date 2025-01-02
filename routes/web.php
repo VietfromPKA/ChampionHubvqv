@@ -23,7 +23,11 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']); // Xử lý đăng nhập
     Route::get('/signin', [AuthController::class, 'showRegisterForm'])->name('signin'); // Hiển thị form đăng ký
     Route::post('/signin', [AuthController::class, 'register']); // Xử lý đăng ký
-    Route::post('/logout', fn() => tap(Auth::logout(), fn() => redirect('/')))->name('logout'); // Xử lý đăng xuất
+    Route::post('/logout', function () {
+        Auth::logout(); // Xử lý logout
+        return redirect('/'); // Trả về trang chủ
+    })->name('logout');
+
 });
 
 // Các route liên quan đến giải đấu
@@ -68,4 +72,6 @@ Route::prefix('games')->name('games.')->group(function () {
     Route::delete('{id}', [GameController::class, 'destroy'])->name('destroy'); // Xóa trận đấu
 });
 
-Route::get('/tournaments', [PublicController::class, 'index'])->name('public.tournaments.index');
+Route::get('/profile', [AuthController::class, 'profile'])->name('user.index');
+Route::get('/tournaments', [PublicController::class, 'tournament'])->name('public.tournaments.index');
+Route::get('/list_teams', [PublicController::class, 'team'])->name('public.teams.index');

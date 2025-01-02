@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Tournament;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,5 +62,13 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+    
+    public function profile(){
+        $user = Auth::user();
+        $tournaments = Tournament::where('user_id', $user->id)->get();
+        $teams = Team::where('user_id', $user->id)->get();
+
+        return view('user.index', compact('user', 'tournaments', 'teams'));
     }
 }
