@@ -7,6 +7,7 @@ use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\PlayerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,3 +76,10 @@ Route::prefix('games')->name('games.')->group(function () {
 Route::get('/profile', [AuthController::class, 'profile'])->name('user.index');
 Route::get('/tournaments', [PublicController::class, 'tournament'])->name('public.tournaments.index');
 Route::get('/list_teams', [PublicController::class, 'team'])->name('public.teams.index');
+
+Route::prefix('teams/{teamId}/players')->name('players.')->group(function () {
+    Route::get('/', [PlayerController::class, 'index'])->name('index'); // Danh sách cầu thủ
+    Route::get('/create', [PlayerController::class, 'create'])->name('create'); // Thêm cầu thủ
+    Route::post('/store', [PlayerController::class, 'store'])->name('store'); // Lưu cầu thủ
+});
+

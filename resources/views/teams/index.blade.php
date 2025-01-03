@@ -25,6 +25,10 @@
                     <td>{{ $team->coach_name }}</td>
                     <td>{{ $team->tournament->name }}</td>
                     <td class="action-buttons">
+                        <!-- Xem Danh Sách cầu thủ -->
+                        <form action="{{ route('players.index', $team->id) }}" method="GET">
+                            <button type="submit" class="action-btn">Danh sách cầu thủ</button>
+
                         <!-- Sửa đội bóng -->
                         <form action="{{ route('team.edit', $team->id) }}" method="GET">
                             <button type="submit" class="edit-button">Sửa</button>
