@@ -48,9 +48,6 @@
                     <li class="navbar-item">
                         <a href="{{ route('login') }}" class="navbar-link">Đăng nhập</a>
                     </li>
-                    <li class="navbar-item">
-                        <a href="{{ route('signin') }}" class="navbar-link">Đăng ký</a>
-                    </li>
                 @endif
             </ul>
 

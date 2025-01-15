@@ -1,113 +1,229 @@
 /* .container */
-.container {
+.tournaments-container {
     max-width: 1200px; /* Giới hạn chiều rộng tối đa của container */
     margin: 0 auto; /* Căn giữa container theo chiều ngang */
     padding: 20px; /* Thêm khoảng cách 20px xung quanh container */
 }
 
-/* .title */
-.title {
-    text-align: center; /* Căn giữa tiêu đề */
-    margin-bottom: 30px; /* Thêm khoảng cách dưới tiêu đề */
-    font-size: 1.2rem; /* Kích thước chữ của tiêu đề */
-    color: #333; /* Màu chữ của tiêu đề */
+/* .page-header */
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border: 5px solid #1abc9c;
+    border-radius: 12px; /* Bo góc nhẹ hơn */
+    padding: 20px;
+    background-color: #f1f8f6; /* Màu nền nhẹ nhàng */
+}
+
+/* .page-title */
+.page-title {
+    font-size: 2.8rem; /* Tăng kích thước chữ */
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 600;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Tăng độ mờ của bóng chữ */
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.page-title::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -15px; /* Dời xuống dưới một chút */
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    transform: translateX(-50%);
+}
+
+/* .search-form */
+.search-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+/* .search-input */
+.search-input {
+    width: 450px;
+    padding: 12px 18px;
+    font-size: 1.1rem; /* Tăng kích thước chữ */
+    border: 2px solid #1abc9c;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-input:focus {
+    border-color: #16a085;
+    box-shadow: 0 0 8px rgba(26, 188, 156, 0.4);
+}
+
+/* .search-btn */
+.search-btn {
+    width: 160px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    color: #fff;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-btn:hover {
+    background: linear-gradient(to right, #16a085, #1abc9c);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 /* .tournament-list */
 .tournament-list {
-    display: flex; /* Sử dụng flexbox để tạo layout */
-    flex-wrap: wrap; /* Cho phép phần tử trong danh sách gói lại khi không đủ chỗ */
-    gap: 20px; /* Khoảng cách giữa các thẻ card */
-    justify-content: center; /* Căn giữa các thẻ card */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0;
+    list-style: none;
 }
 
 /* .tournament-card */
 .tournament-card {
-    background: #fff; /* Màu nền của card */
-    border: 1px solid #ddd; /* Đường viền của card */
-    border-radius: 10px; /* Bo tròn các góc của card */
-    width: 250px; /* Chiều rộng của card */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho card */
-    overflow: hidden; /* Ẩn phần nội dung vượt ra ngoài */
-    transition: transform 0.3s; /* Hiệu ứng chuyển động khi hover */
+    background: linear-gradient(to top, #ffffff, #f9f9f9);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+}
+
+.tournament-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, #1abc9c, #16a085);
 }
 
 /* Hiệu ứng hover trên .tournament-card */
 .tournament-card:hover {
-    transform: translateY(-10px); /* Dịch chuyển card lên trên khi hover */
+    transform: translateY(-15px) scale(1.05); /* Tăng hiệu ứng phóng to */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* .tournament-banner */
 .tournament-banner {
-    height: 150px; /* Chiều cao của banner */
+    height: 180px; /* Chiều cao của banner */
     overflow: hidden; /* Ẩn phần ảnh vượt quá chiều cao */
 }
 
-/* .banner-img */
 .banner-img {
-    width: 100%; /* Chiều rộng của ảnh bằng chiều rộng của banner */
-    height: auto; /* Giữ tỷ lệ chiều cao của ảnh */
-    object-fit: cover; /* Cắt ảnh sao cho vừa với khu vực */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+}
+
+.tournament-banner:hover .banner-img {
+    transform: scale(1.1); /* Tăng hiệu ứng zoom cho banner */
 }
 
 /* .tournament-details */
 .tournament-details {
-    padding: 15px; /* Khoảng cách xung quanh nội dung */
-    text-align: center; /* Căn giữa nội dung */
+    padding: 20px;
+    text-align: center;
 }
 
 /* .tournament-name */
 .tournament-name {
-    font-size: 1.5rem !important; /* Kích thước chữ của tên giải đấu */
-    font-weight: bold; /* Đậm chữ tên giải đấu */
-    color: #444; /* Màu chữ */
-    margin-bottom: 10px; /* Khoảng cách dưới tên giải đấu */
+    font-size: 1.7rem;
+    color: #34495e;
+    margin-bottom: 18px;
+    font-weight: 600;
+    position: relative;
+}
+
+.tournament-name::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #16a085;
+    margin: 15px auto 0 auto;
 }
 
 /* .tournament-date */
 .tournament-date {
-    font-size: 0.9rem !important; /* Kích thước chữ của ngày */
+    font-size: 1rem !important; 
+    color: #7f8c8d;
 }
 
 /* .tournament-type */
 .tournament-type {
-    color: #e74c3c; /* Màu đỏ cho loại giải đấu */
-    font-weight: bold; /* Đậm chữ loại giải đấu */
-    margin: 10px 0; /* Khoảng cách trên và dưới loại giải đấu */
+    color: #e74c3c;
+    font-weight: 600;
+    margin: 12px 0;
 }
 
 /* .follow-btn */
 .follow-btn {
-    background: #e74c3c; /* Màu nền của nút */
-    color: #fff; /* Màu chữ của nút */
-    border: none; /* Không có viền */
-    padding: 10px 20px; /* Khoảng cách bên trong nút */
-    border-radius: 5px; /* Bo tròn các góc của nút */
-    cursor: pointer; /* Hiển thị con trỏ khi di chuột vào nút */
-    margin-bottom: 15px; /* Khoảng cách dưới nút */
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px; /* Bo tròn góc nút hơn */
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Hiệu ứng hover trên nút follow-btn */
 .follow-btn:hover {
-    background: #c0392b; /* Thay đổi màu nền khi hover */
+    background: #c0392b;
+    transform: translateY(-3px);
 }
 
-/* .tournament-meta */
-.tournament-meta {
-    display: flex; /* Sử dụng flexbox để bố trí các phần tử */
-    justify-content: space-between; /* Căn đều các phần tử trong meta */
-    align-items: center; /* Căn giữa các phần tử theo chiều dọc */
-    font-size: 0.9rem; /* Kích thước chữ của meta */
-    color: #777; /* Màu chữ của meta */
+/* .buttom_tt */
+.buttom_tt {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
-
 /* .info-link */
 .info-link {
-    color: #3498db; /* Màu chữ của liên kết */
-    text-decoration: none; /* Không gạch dưới liên kết */
+    display: inline-block;
+    padding: 7px 7px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    border-radius: 30px; /* Bo tròn hơn */
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 5px 0; /* Thêm khoảng cách giữa các nút */
 }
 
-/* Hiệu ứng hover trên liên kết */
 .info-link:hover {
-    text-decoration: underline; /* Gạch dưới liên kết khi hover */
+    background: linear-gradient(to right, #16a085, #1abc9c);
+    transform: translateY(-5px); /* Nâng lên khi hover */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.info-link:active {
+    transform: translateY(2px); /* Hiệu ứng khi nhấn */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }

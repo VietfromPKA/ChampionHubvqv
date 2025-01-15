@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('jersey_number'); // Số áo
             $table->string('email')->unique(); // Email cầu thủ
             $table->timestamps();
-        
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
         
