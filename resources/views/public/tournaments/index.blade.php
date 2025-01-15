@@ -25,11 +25,14 @@
                     <p>⚽ {{ $tournament->teams->count() }} Đội</p>
 
                     <button class="follow-btn">Theo dõi</button>
-                    <div class="buttom_tt">
-                        
-                        <a href="" class="info-link">Đăng Ký →</a>
-                        <a href="" class="info-link">Thông tin →</a>
+                </div>
+                <div class="buttom_tt">
+                    <div class="buttom-tt">
+                        <a href="#" class="btn-link register-link">Đăng Ký →</a>
+                        <a href="{{ route('public.tournaments.show', ['id' => $tournament->id]) }}" class="btn-link info-link">Xem chi tiết</a>
+
                     </div>
+
                 </div>
             </div>
         @endforeach

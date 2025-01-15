@@ -18,4 +18,12 @@ class PublicController extends Controller
         $teams = Team::all();
         return view('public.teams.index', compact('teams'));
     }
+
+    public function showTournament($id)
+    {
+        // Tìm giải đấu theo ID, nếu không có sẽ trả về lỗi 404
+        $tournament = Tournament::findOrFail($id);
+
+        // Trả về view hiển thị chi tiết giải đấu
+        return view('public.tournaments.show', compact('tournament'));}
 }

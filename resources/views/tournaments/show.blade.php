@@ -8,9 +8,11 @@
 <div class="tournament-details">
     <h1 class="tournament-title">{{ $tournament->name }}</h1>
     <p class="tournament-date"><strong>Thời gian:</strong>Từ {{ $tournament->start_date }} đến
-        {{ $tournament->end_date }}</p>
+        {{ $tournament->end_date }}
+    </p>
 
     <h2 class="team-list-title">Danh sách đội bóng</h2>
+    <button class="toggle-teams-btn">Hiển thị danh sách đội bóng</button>
     @if ($tournament->teams->isEmpty())
         <p class="no-teams">Không có đội bóng nào tham gia giải đấu này.</p>
     @else
@@ -36,9 +38,9 @@
         <table class="game-schedule-table">
             <thead>
                 <tr>
+                    <th>Ngày giờ</th>
                     <th>Đội 1</th>
                     <th>Đội 2</th>
-                    <th>Ngày giờ</th>
                     <th>Địa điểm</th>
                     <th>Chỉnh sửa</th>
                 </tr>
@@ -46,9 +48,9 @@
             <tbody>
                 @foreach ($tournament->games as $game)
                     <tr>
+                        <td>{{ $game->match_date }}</td>
                         <td>{{ $game->team1->name }}</td>
                         <td>{{ $game->team2->name }}</td>
-                        <td>{{ $game->match_date }}</td>
                         <td>{{ $game->location }}</td>
                         <td>
                             <a href="{{ route('games.index', $game->id) }}" class="btn btn-primary">Chỉnh sửa</a>
@@ -64,4 +66,18 @@
 
     <a href="{{ route('tournament.index') }}" class="back-link">Quay lại giải đấu</a>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.querySelector('.toggle-teams-btn');
+        const teamList = document.querySelector('.team-list');
+
+        toggleButton.addEventListener('click', function () {
+            teamList.classList.toggle('show');
+            toggleButton.textContent = teamList.classList.contains('show')
+                ? 'Ẩn danh sách đội bóng'
+                : 'Hiển thị danh sách đội bóng';
+        });
+    });
+</script>
+
 @endsection

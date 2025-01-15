@@ -1,379 +1,388 @@
-/* Tạo nền tổng thể cho trang */
+/* Base styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f6f9;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-}
-
-/* Tiêu đề giải đấu */
-#tournament-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin: 30px 0;
+    background: linear-gradient(to bottom, #ece9e6, #ffffff);
     color: #333;
+    overflow-x: hidden;
 }
-
-/* Nút tạo giải đấu */
-#create-tournament {
-    display: inline-block;
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
-    font-size: 1.1rem;
-    border-radius: 4px;
-    text-decoration: none;
-    margin: 20px auto;
-    display: block;
-    width: 220px;
+/* layout ngoài */
+#tournament-title {
+    font-size: 2.5rem;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#create-tournament:hover {
-    background-color: #0056b3;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Tạo khoảng đệm cho trang */
-.container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Bảng giải đấu */
-#tournament-table {
-    width: 90%;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: bold;
     margin-top: 30px;
-    border-collapse: collapse;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px; /* Thêm khoảng cách dưới bảng */
-    margin-left: 5%; /* Canh lề trái cho bảng */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-#tournament-table thead {
-    background-color: #007bff;
-    color: white;
+#tournament-title::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    transform: translateX(-50%);
+}
+
+/* Table styles */
+#tournament-table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #fff;
 }
 
 #tournament-table th,
 #tournament-table td {
-    padding: 15px 20px;
+    padding: 15px;
     text-align: center;
-    font-size: 1rem;
-    font-weight: 500;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease;
+    font-size: 1.1rem;
+    color: #34495e;
 }
 
 #tournament-table th {
+    background-color: #1abc9c;
+    color: white;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
-/* Cột thao tác */
-.action-buttons-cell {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+#tournament-table td {
+    border-top: 1px solid #ddd;
+}
+
+#tournament-table tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+.tournament-link {
+    color: #2c3e50;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.tournament-link:hover {
+    color: #16a085;
+}
+
+/* Button styles */
+#create-tournament {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    color: #fff;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    border-radius: 25px;
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 30px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+#create-tournament:hover {
+    background: linear-gradient(to right, #16a085, #1abc9c);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .edit-button,
 .delete-button {
-    padding: 8px 16px;
+    padding: 8px 18px;
     font-size: 1rem;
-    font-weight: 600;
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .edit-button {
-    background-color: #28a745;
-    color: white;
-}
-
-.edit-button:hover {
-    background-color: #218838;
+    background-color: #1abc9c;
 }
 
 .delete-button {
-    background-color: #dc3545;
-    color: white;
+    background-color: #e74c3c;
+}
+
+.edit-button:hover {
+    background-color: #16a085;
+    transform: translateY(-2px);
 }
 
 .delete-button:hover {
-    background-color: #c82333;
+    background-color: #c0392b;
+    transform: translateY(-2px);
 }
 
-/* Hiệu ứng hover cho các nút */
-button:focus {
-    outline: none;
+.delete-form {
+    margin: 0;
 }
 
-button:active {
-    transform: scale(0.98);
-}
-.tournament-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Responsive design */
+@media (max-width: 768px) {
+    #tournament-title {
+        font-size: 2rem;
+    }
+
+    #tournament-table th,
+    #tournament-table td {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    #create-tournament {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
 }
 
-.form-group {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px; /* Khoảng cách giữa label và input */
-}
-
-.form-label {
-    width: 150px; /* Đặt chiều rộng cố định cho label */
-    text-align: right; /* Căn label sang phải */
-    font-weight: bold;
-    color: #555;
-}
-
-.form-input {
-    flex: 1; /* Input sẽ chiếm phần còn lại của không gian */
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.form-input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.btn-submit {
-    align-self: center; /* Căn nút giữa form */
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.btn-submit:hover {
-    background-color: #0056b3;
-}
-
-/* General tournament details */
+/* Chi tiết */
 .tournament-details {
-    margin: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
 }
 
+/* Header styles */
 .tournament-title {
     font-size: 2.5rem;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 3px;
     font-weight: bold;
-    color: #2d3748;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #3182ce;
-    padding-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 20px;
 }
 
-.tournament-date, .team-count {
+.tournament-title::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    transform: translateX(-50%);
+}
+
+.tournament-date {
     font-size: 1.2rem;
-    color: #4a5568;
-    margin-bottom: 15px;
+    color: #7f8c8d;
+    margin-bottom: 30px;
 }
 
-/* Team list title */
+/* Team list styles */
 .team-list-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
     font-weight: bold;
-    color: #3182ce;
+    text-align: center;
+}
+
+.toggle-teams-btn {
+    display: block;
+    margin: 0 auto 30px;
+    padding: 10px 25px;
+    background: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-teams-btn:hover {
+    background: #16a085;
+    transform: translateY(-3px);
+}
+
+/* Team list show/hide */
+.team-list {
+    display: none;
+    
+}
+
+.team-list.show {
+    display: block;
+    border-top: 5px solid #1abc9c;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 20px;
+
+}
+.team-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 20px;
     margin-top: 20px;
-    border-bottom: 2px solid #3182ce;
-    padding-bottom: 5px;
+}
+
+.team-item {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* thêm viền trên màu 1abc9c*/
+    border-top: 5px solid #1abc9c;
+    transition: transform 0.3s ease;
+}
+
+.team-item:hover {
+    transform: translateY(-5px);
+}
+
+.team-name,
+.coach-name {
+    font-size: 16px;
+    color: #333;
 }
 
 /* No teams message */
 .no-teams {
-    font-size: 1.2rem;
-    color: #e53e3e;
-    font-weight: bold;
-    margin-top: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+    animation: pulse 2s infinite;
 }
 
-/* Team list styles */
-.team-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
-}
-.team-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-.team-item {
-    background-color: #f7fafc;
-    width: 30%;
+/* Game schedule styles */
+.game-schedule-title {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-top: 40px;
     margin-bottom: 15px;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    transition: background-color 0.3s ease;
-}
-
-.team-item:hover {
-    background-color: #edf2f7;
-}
-
-.team-name, .coach-name {
     font-weight: bold;
-    color: #2b6cb0;
+    text-align: center;
 }
 
-.coach-name {
-    color: #48bb78;
-}
-
-/* Back link */
-.back-link {
-    display: inline-block;
-    margin-top: 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #3182ce;
-    text-decoration: none;
-    padding: 8px 16px;
-    border: 2px solid #3182ce;
-    border-radius: 5px;
-    background-color: #f7fafc;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.back-link:hover {
-    background-color: #3182ce;
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .tournament-details {
-        margin: 10px;
-    }
-
-    .tournament-title {
-        font-size: 2rem;
-    }
-
-    .team-list-title {
-        font-size: 1.3rem;
-    }
-
-    .team-item {
-        padding: 10px;
-    }
-
-    .back-link {
-        font-size: 1rem;
-    }
-}
-/* Nút chỉnh sửa và tạo mới cho trận đấu */
-.btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-.btn-success {
-    background-color: #28a745;
-    color: white;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
-/* Các nút quay lại */
-.back-link {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #3182ce;
-    text-decoration: none;
-    padding: 8px 16px;
-    border: 2px solid #3182ce;
-    border-radius: 5px;
-    background-color: #f7fafc;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.back-link:hover {
-    background-color: #3182ce;
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Bảng lịch thi đấu */
 .game-schedule-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 
 .game-schedule-table th,
 .game-schedule-table td {
-    padding: 12px 20px;
+    padding: 12px;
     text-align: center;
-    font-size: 1rem;
     border: 1px solid #ddd;
 }
 
 .game-schedule-table th {
-    background-color: #007bff;
+    background-color: #1abc9c;
     color: white;
-    text-transform: uppercase;
+    font-size: 1.2rem;
 }
 
-.game-schedule-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+.game-schedule-table td {
+    font-size: 1.1rem;
+    color: #34495e;
+
 }
 
-.game-schedule-table tr:hover {
-    background-color: #f1f1f1;
+.game-schedule-table td a {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #16a085;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Responsive Design cho bảng */
-@media (max-width: 768px) {
-    .game-schedule-table th, .game-schedule-table td {
-        padding: 8px 10px;
+.game-schedule-table td a:hover {
+    background-color: #1abc9c;
+    transform: translateY(-2px);
+}
+
+/* Buttons and links */
+.back-link {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    color: #fff;
+    background: linear-gradient(to right, #1abc9c, #16a085);
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
+}
+
+.back-link:hover {
+    background: linear-gradient(to right, #16a085, #1abc9c);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .tournament-title {
+        font-size: 2rem;
     }
 
     .team-item {
-        padding: 12px;
+        padding: 15px;
+    }
+
+    .game-schedule-table th,
+    .game-schedule-table td {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .search-input {
+        width: 200px;
     }
 }

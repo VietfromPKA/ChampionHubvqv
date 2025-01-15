@@ -14,7 +14,8 @@
             <th>Tên giải đấu</th>
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
-            <th>Thao tác</th>
+            <th>Chỉnh sửa</th>
+            <th>Xóa giải đấu</th>
         </tr>
     </thead>
     <tbody>
@@ -32,28 +33,13 @@
                     <form action="{{ route('tournament.edit', $tournament->id) }}" method="GET">
                         <button type="submit" class="edit-button">Sửa</button>
                     </form>
+                </td>
+                <td class="action-buttons-cell">
                     <form action="{{ route('tournament.destroy', $tournament->id) }}" method="POST" class="delete-form">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="delete-button">Xóa</button>
                     </form>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-    <tbody>
-        @foreach ($tournaments as $tournament)
-            <tr class="tournament-row">
-                <td class="tournament-name">
-                    <a href="{{ route('tournaments.show', $tournament->id) }}" class="tournament-link">
-                        {{ $tournament->name }}
-                    </a>
-                </td>
-                <td class="tournament-start-date">{{ $tournament->start_date }}</td>
-                <td class="tournament-end-date">{{ $tournament->end_date }}</td>
-                <td class="action-buttons-cell">
-                    <!-- Liên kết "Xem chi tiết" -->
-                    <a href="{{ route('tournaments.show', $tournament->id) }}" class="view-details-link">Xem chi tiết</a>
                 </td>
             </tr>
         @endforeach

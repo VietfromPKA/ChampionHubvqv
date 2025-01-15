@@ -76,6 +76,8 @@ Route::prefix('games')->name('games.')->group(function () {
 Route::get('/profile', [AuthController::class, 'profile'])->name('user.index');
 Route::get('/tournaments', [PublicController::class, 'tournament'])->name('public.tournaments.index');
 Route::get('/list_teams', [PublicController::class, 'team'])->name('public.teams.index');
+Route::get('/publictournaments/{id}', [PublicController::class, 'showTournament'])->name('public.tournaments.show');
+
 
 Route::prefix('teams/{teamId}/players')->name('players.')->group(function () {
     Route::get('/', [PlayerController::class, 'index'])->name('index'); // Danh sách cầu thủ
