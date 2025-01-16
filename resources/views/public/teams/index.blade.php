@@ -28,8 +28,8 @@
                             {{ $team->tournament->name ?? 'Không rõ' }}
                         </p>
                         <div class="buttom_tt">
-                            <a href="" class="info-link">Đăng Ký →</a>
-                            <a href="" class="info-link">Thông tin →</a>
+                            <a href="" class="info-link">Tham Gia</a>
+                            <a href="" class="info-link">Xem chi tiết</a>
                         </div>
                     </div>
                 @endforeach

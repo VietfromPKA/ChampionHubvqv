@@ -7,7 +7,7 @@
 @section('content')
 <div class="tournaments-container">
     <div class="page-header">
-        <h1 class="title">Danh sách các giải đấu</h1>
+        <h1 class="page-title">Danh sách các giải đấu</h1>
         <form action="#" method="GET" class="search-form">
             <input type="text" name="search" class="search-input" placeholder="Tìm đội bóng">
             <button type="submit" class="search-btn">Tìm Kiếm</button>

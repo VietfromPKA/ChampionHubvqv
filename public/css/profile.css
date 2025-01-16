@@ -1,249 +1,185 @@
-/* General Profile Container */
 .profile-container {
-    width: 100%;
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 40px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f1f3f6;
+    padding: 20px;
+    background: #ecf0f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    animation: fade-in 1s ease-in-out;
 }
 
-/* Title */
 .profile-title {
     text-align: center;
-    font-size: 32px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 40px;
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Profile Card */
 .profile-card {
     display: flex;
     align-items: center;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Avatar */
-.profile-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-right: 30px;
-    object-fit: cover;
-    border: 5px solid #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-/* User Info (Text Section) */
-.profile-info {
-    flex-grow: 1;
-}
-
-/* User Name */
-.user-name {
-    font-size: 28px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 10px;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-    position: relative;
-}
-
-/* Add a glow effect to user name */
-.user-name::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: #007bff;
-    bottom: -5px;
-    left: 0;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.user-name:hover::after {
-    transform: scaleX(1);
-}
-
-/* User Email and Join Date */
-.user-email,
-.join-date {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 12px;
-    font-weight: 500;
-}
-
-/* Highlight Email */
-.user-email strong {
-    color: #007bff;
-}
-
-/* Date formatting */
-.join-date strong {
-    color: #007bff;
-}
-
-/* Tournament and Team List Title */
-.list-title {
-    font-size: 20px;
-    font-weight: 500;
-    color: #333;
-    margin-top: 40px;
-    margin-bottom: 15px;
-}
-
-/* Tournament & Team List */
-.tournament-list,
-.team-list {
-    display: flex;
-    flex-wrap: wrap;
     gap: 20px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    /* Remove bullet points */
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border-top: 5px solid #16a085;
+    border-bottom: 5px solid orangered;
+    border-left: 3px solid #16a085;
+    border-right: 3px solid orangered;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tournament-item,
-.team-item {
-    width: calc(33.333% - 20px);
-    /* 3 columns per row */
-    font-size: 16px;
-    margin-bottom: 12px;
-    text-align: center;
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.tournament-item a,
-.team-item a {
-    display: inline-block;
-    padding: 10px;
-    background-color: white;
-    border-radius: 8px;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #16a085;
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% {
+        border-color: #16a085;
+    }
+    50% {
+        border-color: #1abc9c;
+    }
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.user-name {
+    font-size: 1.8rem;
+    color: #16a085;
+    font-weight: bold;
+    margin: 0 0 10px;
+    animation: fade-in 1s ease-in-out;
+}
+
+.user-email, .join-date {
+    font-size: 1rem;
+    color: #34495e;
+    margin: 5px 0;
+}
+
+.list-title {
+    font-size: 1.4rem;
     width: 100%;
+    color: #2c3e50;
+    margin: 20px 0 10px;
+    border-bottom: 2px solid #16a085;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
-.tournament-item a:hover,
-.team-item a:hover {
-    background-color: #007bff;
+.toggle-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.toggle-tournaments-btn, .toggle-teams-btn {
+    width: 50%;
+    background: #16a085;
     color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+    border-radius: 15px;
+    border-top: 5px solid orangered;
+    border-left: 3px solid orangered;
+    border-right: 3px solid orangered;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
+}
+
+.toggle-tournaments-btn:hover, .toggle-teams-btn:hover {
+    background: #1abc9c;
     transform: translateY(-3px);
 }
 
-.tournament-item a::after,
-.team-item a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background-color: #007bff;
-    transition: width 0.3s ease;
-    bottom: -2px;
-    left: 0;
-}
-
-.tournament-item a:hover::after,
-.team-item a:hover::after {
-    width: 100%;
-}
-
-/* No Tournaments/Teams Message */
-.no-tournaments,
-.no-teams {
-    font-size: 16px;
-    color: #aaa;
+.no-tournaments, .no-teams {
     font-style: italic;
-    text-align: center;
+    color: #7f8c8d;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Logout Button */
-.logout-link {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 12px 18px;
-    font-size: 16px;
-    background-color: red;
-    color: #fff;
+.tournament-list, .team-list {
+    display: none; /* Ẩn danh sách mặc định */
+    flex-wrap: wrap;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tournament-list.show, .team-list.show {
+    display: flex; /* Hiển thị danh sách khi được bật */
+}
+
+.tournament-item, .team-item {
+    flex: 1 1 calc(30% - 15px); /* Two columns */
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 15px;
+    border-top: 5px solid #16a085;
+    border-left: 3px solid #16a085;
+    border-right: 3px solid #16a085;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.tournament-item:hover, .team-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tournament-item a, .team-item a {
+    color: #16a085;
     text-decoration: none;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+}
+
+.tournament-item a:hover, .team-item a:hover {
+    color: #1abc9c;
+}
+
+.logout-link {
+    width: 30%;
+    display: inline-block;
+    background-color: white;
+    padding: 5px 20px;
+    margin-top: 20px;
+    color: red;
+    border-radius: 15px;
+    border-bottom: 5px solid orangered;
+    border-left: 3px solid orangered;
+    border-right: 3px solid orangered;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .logout-link:hover {
-    background-color: #ff2e2e;
+    color: #c0392b;
     transform: translateY(-3px);
-}
-
-/* Hover effect for the profile card */
-.profile-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* Responsive Design for smaller screens */
-@media (max-width: 768px) {
-    .profile-container {
-        padding: 20px;
-    }
-
-    .profile-title {
-        font-size: 28px;
-    }
-
-    .profile-avatar {
-        width: 120px;
-        height: 120px;
-    }
-
-    .user-name {
-        font-size: 24px;
-    }
-
-    .user-email,
-    .join-date {
-        font-size: 14px;
-    }
-
-    /* Display 2 columns for smaller screens */
-    .tournament-item,
-    .team-item {
-        width: calc(50% - 20px);
-        /* 2 columns */
-    }
-}
-
-@media (max-width: 480px) {
-
-    /* Display 1 column for very small screens */
-    .tournament-item,
-    .team-item {
-        width: 100%;
-        /* 1 column */
-    }
-
-    .profile-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .profile-avatar {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
 }

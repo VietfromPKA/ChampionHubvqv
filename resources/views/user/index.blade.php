@@ -17,8 +17,10 @@
             <p class="join-date"><strong>Ngày tham gia:</strong> {{ $user->created_at->format('d-m-Y') ?? '---' }}</p>
         </div>
     </div>
-    <div>
+    <div class="profile-details">
         <h3 class="list-title">Các giải đấu đã tạo:</h3>
+        <button class="toggle-tournaments-btn">Hiển thị các giải đấu đã tạo</button>
+
         @if ($tournaments->isEmpty())
             <p class="no-tournaments">Bạn chưa tạo giải đấu nào.</p>
         @else
@@ -32,6 +34,7 @@
         @endif
 
         <h3 class="list-title">Các đội bóng tham gia:</h3>
+        <button class="toggle-teams-btn">Hiển thị đội bóng tham gia</button>
         @if ($teams->isEmpty())
             <p class="no-teams">Bạn chưa tham gia đội bóng nào.</p>
         @else
@@ -43,7 +46,8 @@
                 @endforeach
             </ul>
         @endif
-
+    </div>
+    <div>
         <a href="{{ route('logout') }}" class="logout-link"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -52,4 +56,29 @@
     </div>
 
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.querySelector('.toggle-teams-btn');
+        const teamList = document.querySelector('.team-list');
+
+        toggleButton.addEventListener('click', function () {
+            teamList.classList.toggle('show');
+            toggleButton.textContent = teamList.classList.contains('show')
+                ? 'Ẩn danh sách đội bóng'
+                : 'Hiển thị danh sách đội bóng';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.querySelector('.toggle-tournaments-btn');
+        const tournamentList = document.querySelector('.tournament-list');
+
+        toggleButton.addEventListener('click', function () {
+            tournamentList.classList.toggle('show');
+            toggleButton.textContent = tournamentList.classList.contains('show')
+                ? 'Ẩn danh sách giải đấu'
+                : 'Hiển thị danh sách giải đấu';
+        });
+    });
+</script>
 @endsection

@@ -59,14 +59,20 @@ body {
     width: 450px;
     padding: 10px 15px;
     font-size: 1rem;
-    border: 2px solid #1abc9c;
+    border-top: 5px solid #16a085;
+    border-bottom: 5px solid orangered;
+    border-left: 3px solid #16a085;
+    border-right: 3px solid orangered;
     border-radius: 25px;
     outline: none;
     transition: all 0.3s ease;
 }
 
 .search-input:focus {
-    border-color: #16a085;
+    border-top: 5px solid orangered;
+    border-bottom: 5px solid #16a085;
+    border-left: 3px solid orangered;
+    border-right: 3px solid #16a085;
     box-shadow: 0 0 8px rgba(26, 188, 156, 0.5);
 }
 
@@ -78,6 +84,10 @@ body {
     background: linear-gradient(to right, #1abc9c, #16a085);
     border: none;
     border-radius: 25px;
+    border-top: 5px solid orangered;
+    border-bottom: 5px solid #16a085;
+    border-left: 3px solid orangered;
+    border-right: 3px solid #16a085;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
     font-weight: bold;
@@ -85,9 +95,13 @@ body {
 }
 
 .search-btn:hover {
-    background: linear-gradient(to right, #16a085, #1abc9c);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to right, #2980b9, #3498db);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    border-bottom: 5px solid orangered;
+    border-top: 5px solid #16a085;
+    border-right: 3px solid orangered;
+    border-left: 3px solid #16a085;
 }
 
 .no-teams-message {
@@ -174,11 +188,15 @@ body {
 
 .info-link {
     display: inline-block;
-    padding: 12px 25px;
+    padding: 5px 20px;
     font-size: 1rem;
     color: #fff;
     background: linear-gradient(to right, #1abc9c, #16a085);
     border-radius: 25px;
+    border-top: 5px solid orangered;
+    border-bottom: 5px solid #16a085;
+    border-left: 3px solid orangered;
+    border-right: 3px solid #16a085;
     text-decoration: none;
     transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
     font-weight: bold;
@@ -188,7 +206,11 @@ body {
 .info-link:hover {
     background: linear-gradient(to right, #16a085, #1abc9c);
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    border-bottom: 5px solid orangered;
+    border-top: 5px solid #16a085;
+    border-right: 3px solid orangered;
+    border-left: 3px solid #16a085;
 }
 
 /* Responsive design */
