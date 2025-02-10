@@ -9,8 +9,14 @@
     <h1 class="profile-title">Thông Tin Cá Nhân</h1>
 
     <div class="profile-card">
-        <img src="{{ asset('images/avt.svg') }}" alt="Avatar" class="profile-avatar">
 
+        <img src="{{ asset('images/avt.svg') }}" alt="Avatar" class="profile-avatar">
+        <!-- @if ($user->avatar)
+            <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" class="profile-avatar">
+        @else
+            <img src="{{ asset('images/avt.svg') }}" alt="Avatar" class="profile-avatar"> -->
+
+        @endif
         <div class="profile-info">
             <h2 class="user-name">{{ $user->name ?? 'Người Dùng' }}</h2>
             <p class="user-email"><strong>Email:</strong> {{ $user->email ?? 'Chưa có thông tin' }}</p>
