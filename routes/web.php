@@ -20,15 +20,27 @@ Route::get('/', fn() => view('home'));
 
 // Các route liên quan đến xác thực
 Route::prefix('auth')->group(function () {
+    // Đăng nhập
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); // Hiển thị form đăng nhập
     Route::post('/login', [AuthController::class, 'login']); // Xử lý đăng nhập
+
+    // Đăng ký
     Route::get('/signin', [AuthController::class, 'showRegisterForm'])->name('signin'); // Hiển thị form đăng ký
     Route::post('/signin', [AuthController::class, 'register']); // Xử lý đăng ký
+
+    // Đăng xuất
     Route::post('/logout', function () {
         Auth::logout(); // Xử lý logout
         return redirect('/'); // Trả về trang chủ
     })->name('logout');
 
+    // Quên mật khẩu
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request'); // Hiển thị form quên mật khẩu
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email'); // Xử lý gửi liên kết đặt lại mật khẩu
+
+    // Đặt lại mật khẩu
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset'); // Hiển thị form đặt lại mật khẩu
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update'); // Xử lý đặt lại mật khẩu
 });
 
 // Các route liên quan đến giải đấu
