@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('styles')
-<link href="{{ asset('css/qlygiaidau.css') }}" rel="stylesheet">
+<link href="{{ asset('css/create.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

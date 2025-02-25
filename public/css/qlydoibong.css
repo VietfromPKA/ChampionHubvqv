@@ -1,194 +1,206 @@
-/* General container */
+/* Tổng thể */
 .team-list-container {
-    margin: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.page-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #3182ce;
-    padding-bottom: 5px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
+.page-title {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Nút thêm đội bóng */
 .add-team-btn {
     display: inline-block;
-    background-color: #3182ce;
-    color: #fff;
-    font-size: 1rem;
+    padding: 12px 16px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
     text-decoration: none;
-    margin-bottom: 20px;
-    transition: background-color 0.3s ease;
 }
 
 .add-team-btn:hover {
-    background-color: #2b6cb0;
+    background-color: #218838;
 }
 
-/* Table styling */
+/* Bảng danh sách đội bóng */
 .team-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #f7fafc;
-    border-radius: 8px;
-    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .team-table th, .team-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #e2e8f0;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
 }
 
 .team-table th {
-    background-color: #3182ce;
-    color: #fff;
+    background-color: #007bff;
+    color: white;
     font-weight: bold;
 }
 
 .team-table tr:nth-child(even) {
-    background-color: #f1f5f9;
+    background-color: #f8f9fa;
 }
 
 .team-table tr:hover {
-    background-color: #edf2f7;
+    background-color: #e9ecef;
+    transition: 0.3s;
 }
 
-/* Action buttons */
+/* Nút hành động */
 .action-buttons {
     display: flex;
+    justify-content: center;
     gap: 10px;
 }
 
-.edit-button, .delete-btn {
-    padding: 6px 12px;
-    font-size: 0.9rem;
+.action-btn, .edit-button, .delete-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
     border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.action-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.action-btn:hover {
+    background-color: #138496;
 }
 
 .edit-button {
-    background-color: #38b2ac;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+    background-color: #ffc107;
+    color: black;
 }
 
 .edit-button:hover {
-    background-color: #319795;
+    background-color: #e0a800;
 }
 
 .delete-btn {
-    background-color: #e53e3e;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+    background-color: #dc3545;
+    color: white;
 }
 
 .delete-btn:hover {
-    background-color: #c53030;
+    background-color: #c82333;
 }
 
-.delete-btn:focus {
-    outline: none;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-    .team-list-container {
-        margin: 10px;
+    .team-table, .team-table th, .team-table td {
+        font-size: 14px;
     }
 
-    .page-title {
-        font-size: 1.5rem;
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-btn, .edit-button, .delete-btn {
+        width: 100%;
+        margin-top: 5px;
     }
 
     .add-team-btn {
-        font-size: 0.9rem;
-        padding: 6px 12px;
-    }
-
-    .team-table th, .team-table td {
-        padding: 8px;
-    }
-
-    .edit-button, .delete-btn {
-        font-size: 0.8rem;
-        padding: 4px 8px;
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
     }
 }
-
-
-/* General page title styling */
+/* Tổng thể */
 .page-title {
-    font-size: 2rem;
+    text-align: center;
+    font-size: 28px;
     color: #333;
     margin-bottom: 20px;
 }
 
-/* Form container styling */
+/* Form */
 .team-form {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    background-color: #f9f9f9;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form group styling */
+/* Nhóm input */
 .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Label styling */
-.form-group label {
-    font-size: 1.1rem;
-    color: #555;
+label {
+    font-weight: bold;
     margin-bottom: 5px;
-    display: block;
+    color: #555;
 }
 
-/* Input fields and select styling */
+/* Input và Select */
 .form-control {
-    width: 100%;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    transition: border 0.3s ease;
 }
 
-/* Button styling */
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Nút submit */
 .btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 1.1rem;
     border-radius: 5px;
     cursor: pointer;
-    display: inline-block;
-    text-align: center;
+    transition: background 0.3s ease;
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
 }
 
-/* Error styling for invalid fields (optional) */
-input:invalid, select:invalid {
-    border-color: #dc3545;
-    background-color: #f8d7da;
-}
+/* Responsive */
+@media (max-width: 600px) {
+    .team-form {
+        width: 90%;
+        padding: 15px;
+    }
 
-input:valid, select:valid {
-    border-color: #28a745;
+    .btn-primary {
+        font-size: 14px;
+        padding: 10px;
+    }
 }

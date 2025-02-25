@@ -1,93 +1,201 @@
-/* Cấu trúc chung cho trang */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0;
-}
-
-/* Bố cục container */
-.container-games {
+/* General container styling */
+.container-games-form {
+    max-width: 800px;
+    margin: 40px auto;
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Tiêu đề */
-.container-games h1 {
+/* Page title styling */
+.games-form-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #333;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #3182ce;
+    padding-bottom: 10px;
+}
+
+/* Form group styling */
+.form-group-games {
     margin-bottom: 20px;
 }
 
-/* Nút tạo trận đấu mới */
-.btn-primary-games {
-    padding: 10px 20px;
+/* Label styling */
+.games-form-label {
     font-size: 1.1rem;
-    background-color: #007bff;
-    color: white;
+    color: #34495e;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 500;
+}
+
+/* Input and select fields styling */
+.form-control-games {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.form-control-games:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    outline: none;
+    background-color: #fff;
+}
+
+/* Submit button styling */
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.btn-submit:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Table styling (from your provided code) */
+.team-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f7fafc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.team-table th, .team-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+}
+
+.team-table th {
+    background-color: #3182ce;
+    color: #fff;
+    font-weight: bold;
+}
+
+.team-table tr:nth-child(even) {
+    background-color: #f1f5f9;
+}
+
+.team-table tr:hover {
+    background-color: #edf2f7;
+}
+
+/* Action buttons (from your provided code) */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .delete-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
     border-radius: 5px;
     text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-button {
+    background-color: #38b2ac;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #319795;
+}
+
+.delete-btn {
+    background-color: #e53e3e;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c53030;
+}
+
+.delete-btn:focus {
+    outline: none;
+}
+/* Tổng thể */
+.container-games {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    font-size: 28px;
     margin-bottom: 20px;
+}
+
+/* Nút hành động */
+.btn-primary-games,
+.btn-warning-games,
+.btn-danger-games {
     display: inline-block;
-    transition: background-color 0.3s ease;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary-games {
+    background-color: #007bff;
+    color: white;
 }
 
 .btn-primary-games:hover {
     background-color: #0056b3;
 }
 
-/* Bảng trận đấu */
-.table-games {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.table-games thead {
-    background-color: #007bff;
-    color: white;
-}
-
-.table-games th, .table-games td {
-    padding: 12px 20px;
-    text-align: center;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-}
-
-.table-games th {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.table-games tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.table-games tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Các nút hành động */
-.btn-info-games, .btn-warning-games, .btn-danger-games {
-    padding: 6px 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-
 .btn-warning-games {
-    background-color: #007bff;
-    color: white;
+    background-color: #ffc107;
+    color: black;
 }
 
 .btn-warning-games:hover {
-    background-color: #0056b3;
+    background-color: #e0a800;
 }
 
 .btn-danger-games {
@@ -99,153 +207,81 @@ body {
     background-color: #c82333;
 }
 
-/* Hiệu ứng hover cho các nút */
-button:focus {
-    outline: none;
+/* Bảng danh sách */
+.table-games {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button:active {
-    transform: scale(0.98);
+.table-games th, .table-games td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
 }
+
+.table-games th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.table-games tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table-games tr:hover {
+    background-color: #e9ecef;
+    transition: 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-games, .table-games th, .table-games td {
+        font-size: 14px;
+    }
+
+    .btn-primary-games,
+    .btn-warning-games,
+    .btn-danger-games {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .table-games th, .table-games td {
-        padding: 8px 10px;
+    .container-games-form {
+        margin: 20px;
+        padding: 15px;
     }
 
-    .container-games h1 {
+    .games-form-title {
         font-size: 2rem;
     }
 
-    .btn-primary-games {
-        width: 100%;
-        text-align: center;
+    .games-form-label {
+        font-size: 1rem;
     }
-}
-/* Chung cho tất cả form */
-.container-games-form {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
 
-.games-form-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    align-items: center;
-}
+    .form-control-games {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
 
-.form-group-games {
-    margin-bottom: 20px;
-}
+    .btn-submit {
+        font-size: 1rem;
+        padding: 12px;
+    }
 
-label.games-form-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-    color: #34495e;
-}
+    .team-table th, .team-table td {
+        padding: 8px;
+    }
 
-.form-control-games {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #bdc3c7;
-    font-size: 1rem;
-}
-
-.form-control-games:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-}
-
-/* Nút button */
-.btn-primary-games {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.btn-primary-games:hover {
-    background-color: #2980b9;
-}
-
-/* Thiết kế riêng cho từng form */
-.container-games-edit {
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.container-games-create {
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.form-group-games select,
-.form-group-games input {
-    background-color: #fff;
-}
-
-/* Các thiết lập thêm cho form tạo trận đấu và chỉnh sửa trận đấu */
-#tournament_id, #team1_id, #team2_id, #match_date, #location {
-    background-color: #ecf0f1;
-    font-size: 1rem;
-}
-
-button[type="submit"].btn-submit {
-    background-color: #27ae60;
-    color: white;
-    font-weight: bold;
-}
-
-button[type="submit"].btn-submit:hover {
-    background-color: #2ecc71;
-}
-
-/* Cải tiến giao diện input */
-input[type="datetime-local"].games-datetime-local {
-    padding: 8px;
-}
-
-input[type="text"].games-text-input {
-    padding: 8px;
-}
-
-
-/* Tiêu đề của các label căn trái */
-.games-form-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-    color: #34495e;
-    text-align: left;
-}
-
-/* Nút to hơn một chút và căn giữa */
-.btn-submit {
-    background-color: #27ae60;
-    color: white;
-    font-weight: bold;
-    padding: 15px 10px; /* Tăng kích thước nút */
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem; /* Tăng kích thước chữ */
-    cursor: pointer;
-    width: 30%; /* Căn giữa nút */
-    text-align: center;
-    margin-top: 20px;
-}
-
-.btn-submit:hover {
-    background-color: #2ecc71;
+    .edit-button, .delete-btn {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
 }

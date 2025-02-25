@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('styles')
+<link href="{{ asset('css/player.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="container">
     <h1>Thêm cầu thủ vào đội: {{ $team->name }}</h1>
