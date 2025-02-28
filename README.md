@@ -50,7 +50,8 @@ php artisan serve
 
 ---
 ## UML
-(Bổ sung sơ đồ UML nếu có)
+![image](https://github.com/user-attachments/assets/efff87b3-fead-48ce-8b81-201e9a8e24c8)
+
 
 ---
 ## Thông Tin Liên Hệ
