@@ -34,9 +34,7 @@ ChampionHub là một ứng dụng web quản lý giải bóng đá được ph�
 
 ### Cài đặt dự án
 ```sh
-composer create-project --prefer-dist laravel/laravel championHubWebApp
-cd championHubWebApp
-cp .env.example .env
+git clone https://github.com/VietfromPKA/ChampionHubvqv.git
 php artisan key:generate
 php artisan migrate
 php artisan serve
@@ -59,6 +57,7 @@ php artisan serve
 - **Tác giả**: Vũ Quốc Việt
 - **MSSV**: 22010256
 - **GitHub**: [VietfromPKA](https://github.com/VietfromPKA)
+- **Link Repo** : https://github.com/VietfromPKA/ChampionHubvqv.git
 
 Ứng dụng này được phát triển với mục tiêu giúp tổ chức các giải bóng đá trở nên dễ dàng và chuyên nghiệp hơn.
 
