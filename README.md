@@ -1,44 +1,64 @@
-# ChampionHub
+# ChampionHubvqv
 
-## Mô Tả Dự Án
-Dự án này là một ứng dụng quản lý giải bóng đá được xây dựng bằng PHP và Laravel Framework. Ứng dụng hỗ trợ quản lý thông tin đội bóng, cầu thủ, lịch thi đấu, kết quả trận đấu và bảng xếp hạng. Mục tiêu là cung cấp một nền tảng chuyên nghiệp để theo dõi và tổ chức các giải bóng đá một cách hiệu quả.
-
----
+## Giới Thiệu
+ChampionHub là một ứng dụng web quản lý giải bóng đá được phát triển bằng PHP và Laravel Framework. Ứng dụng hỗ trợ quản lý đội bóng, cầu thủ, lịch thi đấu, kết quả trận đấu và bảng xếp hạng một cách hiệu quả, giúp tổ chức và theo dõi các giải đấu chuyên nghiệp.
 
 ## Tính Năng Chính
-1. **Quản lý đội bóng:**
-   - Thêm, sửa, xóa đội bóng.
-   - Quản lý thông tin đội bóng như tên, logo, huấn luyện viên, v.v.
 
-2. **Quản lý cầu thủ:**
-   - Thêm, sửa, xóa cầu thủ.
-   - Liên kết cầu thủ với đội bóng.
+### 1. Quản lý đội bóng
+- Thêm, sửa, xóa đội bóng.
+- Cập nhật thông tin đội bóng như tên, logo, huấn luyện viên, v.v.
 
-3. **Quản lý giải đấu:**
-   - Tạo giải đấu mới.
-   - Lập lịch thi đấu.
+### 2. Quản lý cầu thủ
+- Thêm, sửa, xóa cầu thủ.
+- Liên kết cầu thủ với đội bóng.
 
-4. **Quản lý kết quả:**
-   - Cập nhật kết quả trận đấu.
-   - Tự động tính toán bảng xếp hạng.
+### 3. Quản lý giải đấu
+- Tạo và quản lý giải đấu.
+- Lập lịch thi đấu tự động.
 
-5. **Trang hiển thị công khai:**
-   - Hiển thị lịch thi đấu, kết quả và bảng xếp hạng cho người dùng.
+### 4. Quản lý kết quả
+- Cập nhật kết quả trận đấu.
+- Tự động tính toán và cập nhật bảng xếp hạng.
+
+### 5. Hiển thị công khai
+- Trang web hiển thị lịch thi đấu, kết quả và bảng xếp hạng cho người dùng.
 
 ---
-# Project: championHub
-Football Managment Web Application
+## Cài Đặt
+### Yêu cầu hệ thống
+- PHP 8.x
+- Composer
+- Laravel Framework
+- MySQL hoặc PostgreSQL
 
-# Description
-## UML
-
-
-
-# Install
-```
-composer create-project --prefer-dist laravel/laravel championHubWebApp
-
+### Cài đặt dự án
+```sh
+git clone https://github.com/VietfromPKA/ChampionHubvqv.git
+php artisan key:generate
+php artisan migrate
 php artisan serve
-
 ```
-# Deployment
+
+---
+## Triển Khai
+Ứng dụng có thể được triển khai trên các nền tảng hosting hỗ trợ Laravel như:
+- VPS (Ubuntu, CentOS)
+- Laravel Forge
+- Heroku
+- DigitalOcean
+
+---
+## UML
+![image](https://github.com/user-attachments/assets/efff87b3-fead-48ce-8b81-201e9a8e24c8)
+
+
+---
+## Thông Tin Liên Hệ
+- **Tác giả**: Vũ Quốc Việt
+- **MSSV**: 22010256
+- **GitHub**: [VietfromPKA](https://github.com/VietfromPKA)
+- **Link Repo** : https://github.com/VietfromPKA/ChampionHubvqv.git
+
+Ứng dụng này được phát triển với mục tiêu giúp tổ chức các giải bóng đá trở nên dễ dàng và chuyên nghiệp hơn.
+
