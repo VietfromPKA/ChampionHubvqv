@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('players', function (Blueprint $table) {
@@ -18,7 +16,7 @@ return new class extends Migration
             $table->string('position')->nullable();
             $table->unsignedBigInteger('team_id'); // Khóa ngoại
             $table->integer('jersey_number'); // Số áo
-            $table->string('email')->unique(); // Email cầu thủ
+            $table->string('email'); // Email cầu thủ
             $table->timestamps();
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });

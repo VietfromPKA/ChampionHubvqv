@@ -39,7 +39,7 @@ class TournamentController extends Controller
         $tournament->end_date = $request->end_date;
         $tournament->save();
 
-        return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được thêm.');
+        return redirect()->route('tournament.index')->with('success', 'Giải đấu đã được thêm.');
     }
 
     // Hiển thị form chỉnh sửa giải đấu
@@ -73,7 +73,7 @@ class TournamentController extends Controller
         $tournament = Auth::user()->tournaments()->findOrFail($id);
         $tournament->delete();
 
-        return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được xóa.');
+        return redirect()->route('tournament.index')->with('success', 'Giải đấu đã được xóa.');
     }
 
     public function show($id)

@@ -91,9 +91,12 @@ Route::get('/list_teams', [PublicController::class, 'team'])->name('public.teams
 Route::get('/publictournaments/{id}', [PublicController::class, 'showTournament'])->name('public.tournaments.show');
 
 
-Route::prefix('teams/{teamId}/players')->name('players.')->group(function () {
-    Route::get('/', [PlayerController::class, 'index'])->name('index'); // Danh sách cầu thủ
-    Route::get('/create', [PlayerController::class, 'create'])->name('create'); // Thêm cầu thủ
-    Route::post('/store', [PlayerController::class, 'store'])->name('store'); // Lưu cầu thủ
+Route::prefix('teams/{teamId}/players')->group(function () {
+    Route::get('/', [PlayerController::class, 'index'])->name('players.index'); 
+    Route::get('/create', [PlayerController::class, 'create'])->name('players.create'); 
+    Route::post('/', [PlayerController::class, 'store'])->name('players.store'); 
+    // sửa cầu thủ
+    
 });
+
 

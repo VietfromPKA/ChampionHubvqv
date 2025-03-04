@@ -18,6 +18,7 @@
                     <th>Vị trí</th>
                     <th>Số áo</th>
                     <th>Email</th>
+                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,14 @@
                         <td>{{ $player->position ?? 'N/A' }}</td>
                         <td>{{ $player->jersey_number }}</td>
                         <td>{{ $player->email }}</td>
+                        <td>
+                            <a href="{{ route('players.create', $player->id) }}" class="btn btn-warning">Sửa</a>
+                            <form action="{{ route('players.create', $player->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa cầu thủ này không?')">Xóa</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
