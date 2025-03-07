@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('verification_token')->nullable();   //Sử dụng để xác thực tài khoản
+            $table->string('reset_token')->nullable();  //Sử dụng để reset password
             $table->string('role')->default('user'); // Vai trò mặc định là 'user'
             $table->rememberToken();
             $table->timestamps();

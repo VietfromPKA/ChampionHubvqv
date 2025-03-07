@@ -7,6 +7,7 @@ use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -22,13 +23,27 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // Xác thực dữ liệu đầu vào
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|min:6',
+        ], [
+            'email.required' => 'Please enter email.',
+            'email.email' => 'Invalid email.',
+            'password.required' => 'Please enter password.',
+            'password.min' => 'Password must be at least 6 characters.',
         ]);
+    
+        //Kiểm tra xác thực tài khoản qua email
+        $user = User::where('email', $request->email)->first();
+        if ($user && !$user->email_verified_at) {
+            return back()->withErrors(['email' => 'Please verify your email before logging in.'])->withInput();
+        }
+        
+        //Lẩy thông tin đăng nhập
+        $credentials = $request->only('email', 'password');
 
         // Kiểm tra thông tin đăng nhập
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {   
             // Tạo lại session để tránh tấn công session fixation
             $request->session()->regenerate();
             // Chuyển hướng đến trang chính hoặc trang mong muốn
@@ -36,10 +51,22 @@ class AuthController extends Controller
         }
 
         // Trả về thông báo lỗi nếu đăng nhập thất bại
-        return view('auth.login')->withErrors([
-            'email' => 'Thông tin đăng nhập không chính xác.',
-            'Vui lòng kiểm tra lại email và mật khẩu.',
-        ]);
+        return view('auth.login')->withErrors(['email' => 'Thông tin đăng nhập không chính xác.', 'Vui lòng kiểm tra lại email và mật khẩu.',]);
+    }
+
+    //Xử lý xác thực email
+    function verifyEmail($token){
+        $user = User::where('verification_token', $token)->first();
+
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Token is invalid or expired.');
+        }
+
+        $user->email_verified_at = now();
+        $user->verification_token = null;
+        $user->save();
+
+        return redirect()->route('login')->with('success', 'Email verification successful! You can log in.');
     }
 
     // Hiển thị form đăng ký tài khoản
@@ -59,11 +86,19 @@ class AuthController extends Controller
         ]);
 
         // Tạo người dùng mới trong database
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['password']), // Mã hóa mật khẩu
+            'password' => Hash::make($validated['password']), // Mã hóa mật khẩu            
+            'email_verified_at' => null,
+            'verification_token' => Str::random(40), 
         ]);
+
+        // Gửi email xác thực
+        Mail::send('auth.email', ['user' => $user], function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject("Verify your email");
+        });
 
         // Chuyển hướng đến trang đăng nhập với thông báo thành công
         return redirect()->route('login')->with('success', 'Đăng ký thành công. Vui lòng đăng nhập.');

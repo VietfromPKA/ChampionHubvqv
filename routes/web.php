@@ -28,6 +28,9 @@ Route::prefix('auth')->group(function () {
     Route::get('/signin', [AuthController::class, 'showRegisterForm'])->name('signin'); // Hiển thị form đăng ký
     Route::post('/signin', [AuthController::class, 'register']); // Xử lý đăng ký
 
+    //Xác thực email
+    Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verifyEmail');
+
     // Đăng xuất
     Route::post('/logout', function () {
         Auth::logout(); // Xử lý logout

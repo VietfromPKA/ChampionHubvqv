@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Test Email</title>
-</head>
-<body>
-    <h1>Test Email</h1>
-    <p>{{ $content }}</p>
-</body>
-</html>
+<p>Dear {{ $user->name }},</p>
+
+<p>Thank you for registering! Please verify your email by clicking the link below:</p>
+
+<p>
+    <a href="{{ route('verifyEmail', $user->verification_token) }}">
+        Click here to verify your email
+    </a>
+</p>
+
+<p>If you did not sign up, please ignore this email.</p>
