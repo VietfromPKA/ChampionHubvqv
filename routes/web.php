@@ -98,8 +98,17 @@ Route::prefix('teams/{teamId}/players')->group(function () {
     Route::get('/', [PlayerController::class, 'index'])->name('players.index'); 
     Route::get('/create', [PlayerController::class, 'create'])->name('players.create'); 
     Route::post('/', [PlayerController::class, 'store'])->name('players.store'); 
-    // sửa cầu thủ
-    
+
+    // Route chỉnh sửa cầu thủ
+    Route::get('/{playerId}/edit', [PlayerController::class, 'edit'])->name('players.edit'); 
+    Route::put('/{playerId}', [PlayerController::class, 'update'])->name('players.update'); 
+    Route::delete('/{playerId}', [PlayerController::class, 'destroy'])->name('players.destroy');
 });
+
+Route::prefix('teams/{teamId}/players')->group(function () {
+    Route::get('/import', [PlayerController::class, 'showImportForm'])->name('players.import.form');
+    Route::post('/import', [PlayerController::class, 'importPlayers'])->name('players.import');
+});
+
 
 
