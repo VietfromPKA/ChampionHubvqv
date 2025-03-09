@@ -7,6 +7,14 @@
 @section('content')
 <div class="wrapper">
     <h2>Đăng Ký</h2>
+    @if (session('success'))
+        <script>
+            // Hiển thị hộp thông báo
+            alert("{{ session('success') }}");
+            // Chuyển hướng đến trang đăng nhập sau khi người dùng nhấn OK
+            window.location.href = "{{ route('login') }}";
+        </script>
+    @endif
     <form action="{{ route('signin') }}" method="post">
         @csrf
         <div class="input-field">

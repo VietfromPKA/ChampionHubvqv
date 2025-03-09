@@ -27,23 +27,23 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ], [
-            'email.required' => 'Please enter email.',
-            'email.email' => 'Invalid email.',
-            'password.required' => 'Please enter password.',
-            'password.min' => 'Password must be at least 6 characters.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
         ]);
-    
-        //Kiểm tra xác thực tài khoản qua email
+
+        // Kiểm tra xác thực tài khoản qua email
         $user = User::where('email', $request->email)->first();
         if ($user && !$user->email_verified_at) {
-            return back()->withErrors(['email' => 'Please verify your email before logging in.'])->withInput();
+            return back()->withErrors(['email' => 'Vui lòng xác thực email trước khi đăng nhập.'])->withInput();
         }
-        
-        //Lẩy thông tin đăng nhập
+
+        // Lấy thông tin đăng nhập
         $credentials = $request->only('email', 'password');
 
         // Kiểm tra thông tin đăng nhập
-        if (Auth::attempt($credentials)) {   
+        if (Auth::attempt($credentials)) {
             // Tạo lại session để tránh tấn công session fixation
             $request->session()->regenerate();
             // Chuyển hướng đến trang chính hoặc trang mong muốn
@@ -51,22 +51,23 @@ class AuthController extends Controller
         }
 
         // Trả về thông báo lỗi nếu đăng nhập thất bại
-        return view('auth.login')->withErrors(['email' => 'Thông tin đăng nhập không chính xác.', 'Vui lòng kiểm tra lại email và mật khẩu.',]);
+        return view('auth.login')->withErrors(['email' => 'Thông tin đăng nhập không chính xác. Vui lòng kiểm tra lại email và mật khẩu.']);
     }
 
     //Xử lý xác thực email
-    function verifyEmail($token){
+    function verifyEmail($token)
+    {
         $user = User::where('verification_token', $token)->first();
 
         if (!$user) {
-            return redirect()->route('login')->with('error', 'Token is invalid or expired.');
+            return redirect()->route('login')->with('error', 'Mã xác thực không hợp lệ hoặc đã hết hạn.');
         }
 
         $user->email_verified_at = now();
         $user->verification_token = null;
         $user->save();
 
-        return redirect()->route('login')->with('success', 'Email verification successful! You can log in.');
+        return redirect()->route('login')->with('success', 'Xác thực email thành công! Bạn có thể đăng nhập ngay.');
     }
 
     // Hiển thị form đăng ký tài khoản
@@ -83,6 +84,15 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+        ], [
+            'name.required' => 'Vui lòng nhập họ tên.',
+            'name.max' => 'Họ tên không được vượt quá 255 ký tự.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.unique' => 'Email đã tồn tại. Vui lòng sử dụng email khác.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
         ]);
 
         // Tạo người dùng mới trong database
@@ -91,17 +101,16 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']), // Mã hóa mật khẩu            
             'email_verified_at' => null,
-            'verification_token' => Str::random(40), 
+            'verification_token' => Str::random(40),
         ]);
 
         // Gửi email xác thực
         Mail::send('auth.email', ['user' => $user], function ($message) use ($user) {
             $message->to($user->email);
-            $message->subject("Verify your email");
+            $message->subject("Xác thực email của bạn");
         });
-
-        // Chuyển hướng đến trang đăng nhập với thông báo thành công
-        return redirect()->route('login')->with('success', 'Đăng ký thành công. Vui lòng đăng nhập.');
+        // Trả về view đăng ký với thông báo thành công
+        return redirect()->route('signin')->with('success', 'Đăng ký thành công. Vui lòng kiểm tra email để xác nhận tài khoản.');
     }
 
     // Xử lý đăng xuất người dùng
@@ -143,7 +152,12 @@ class AuthController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         // Xác thực email
-        $request->validate(['email' => 'required|email']);
+        $request->validate([
+            'email' => 'required|email'
+        ], [
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.'
+        ]);
 
         // Gửi liên kết đặt lại mật khẩu
         $status = Password::sendResetLink(
@@ -152,8 +166,8 @@ class AuthController extends Controller
 
         // Kiểm tra trạng thái gửi email
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            ? back()->with(['status' => 'Đường dẫn đặt lại mật khẩu đã được gửi đến email của bạn!'])
+            : back()->withErrors(['email' => 'Không thể gửi email đặt lại mật khẩu. Vui lòng kiểm tra lại email.']);
     }
 
     // Hiển thị form đặt lại mật khẩu
@@ -170,6 +184,13 @@ class AuthController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
+        ], [
+            'token.required' => 'Thiếu mã token đặt lại mật khẩu.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu mới.',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
         ]);
 
         // Đặt lại mật khẩu cho người dùng
@@ -187,7 +208,7 @@ class AuthController extends Controller
 
         // Chuyển hướng đến trang đăng nhập nếu thành công, nếu không hiển thị lỗi
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+            ? redirect()->route('login')->with('status', 'Đặt lại mật khẩu thành công! Bạn có thể đăng nhập ngay.')
+            : back()->withErrors(['email' => 'Đặt lại mật khẩu thất bại. Vui lòng thử lại sau.']);
     }
 }
