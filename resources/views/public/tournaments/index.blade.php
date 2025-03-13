@@ -30,9 +30,7 @@
                     <div class="buttom-tt">
                         <a href="#" class="btn-link register-link">Đăng Ký →</a>
                         <a href="{{ route('public.tournaments.show', ['id' => $tournament->id]) }}" class="btn-link info-link">Xem chi tiết</a>
-
                     </div>
-
                 </div>
             </div>
         @endforeach

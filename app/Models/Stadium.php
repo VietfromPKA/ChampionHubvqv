@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Stadium extends Model
+{
+    use HasFactory;
+
+    protected $table = 'stadiums'; // Xác định đúng tên bảng
+    protected $fillable = [
+        'name',
+        'phone',
+        'description',
+        'location',
+        'price_per_hour',
+        'field_count',
+        'encrypted_image'
+    ];
+}

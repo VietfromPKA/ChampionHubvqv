@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Giải Đấu - CHAMPIONHUB</title>
     <link rel="stylesheet" href="{{ asset('./css/app.css') }}">
+    <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
     @yield('styles')
 </head>
 
@@ -23,7 +24,7 @@
                     <a href="{{ route('public.teams.index')}}" class="navbar-link">Danh sách đội bóng</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="{{ route('public.tournaments.index') }}" class="navbar-link">Danh sách giải đấu</a>
+                    <a href="{{ route('stadiums.index') }}" class="navbar-link">Sân bóng</a>
                 </li>
                 <li class="navbar-item">
                     <a href="" class="navbar-link">Tin tức</a>
@@ -36,9 +37,11 @@
                     <li class="navbar-item">
                         <a href="{{ route('team.index') }}" class="navbar-link">Đội bóng</a>
                     </li>
-
                     <li class="navbar-item">
                         <a href="{{ route('user.index') }}" class="navbar-link">{{ auth()->user()->name }}</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="#" class="navbar-link"><i class="fa-solid fa-bell"></i></a>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
