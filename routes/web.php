@@ -9,6 +9,8 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\StadiumController;
+use App\Http\Controllers\StadiumImageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,13 +98,13 @@ Route::get('/publictournaments/{id}', [PublicController::class, 'showTournament'
 
 
 Route::prefix('teams/{teamId}/players')->group(function () {
-    Route::get('/', [PlayerController::class, 'index'])->name('players.index'); 
-    Route::get('/create', [PlayerController::class, 'create'])->name('players.create'); 
-    Route::post('/', [PlayerController::class, 'store'])->name('players.store'); 
+    Route::get('/', [PlayerController::class, 'index'])->name('players.index');
+    Route::get('/create', [PlayerController::class, 'create'])->name('players.create');
+    Route::post('/', [PlayerController::class, 'store'])->name('players.store');
 
     // Route chỉnh sửa cầu thủ
-    Route::get('/{playerId}/edit', [PlayerController::class, 'edit'])->name('players.edit'); 
-    Route::put('/{playerId}', [PlayerController::class, 'update'])->name('players.update'); 
+    Route::get('/{playerId}/edit', [PlayerController::class, 'edit'])->name('players.edit');
+    Route::put('/{playerId}', [PlayerController::class, 'update'])->name('players.update');
     Route::delete('/{playerId}', [PlayerController::class, 'destroy'])->name('players.destroy');
 });
 
@@ -112,15 +114,23 @@ Route::prefix('teams/{teamId}/players')->group(function () {
 });
 
 
-// Các route cho tất cả user (xem sân bóng)
+
+Route::middleware(['auth'])->group(function () {
+    // Chỉ admin mới được phép chỉnh sửa/xóa
+    Route::middleware(['admin'])->group(function () {
+        Route::post('/stadiums/{id}/upload-image', [StadiumController::class, 'uploadImage'])->name('stadiums.uploadImage');
+
+        Route::get('/stadiums/{id}/edit', [StadiumController::class, 'edit'])->name('stadiums.edit');
+        Route::put('/stadiums/{id}', [StadiumController::class, 'update'])->name('stadiums.update');
+        Route::delete('/stadiums/{id}', [StadiumController::class, 'destroy'])->name('stadiums.destroy');
+    });
+});
 Route::get('/stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
+Route::get('/stadiums/create', [StadiumController::class, 'create'])->name('stadiums.create');
+Route::post('/stadiums', [StadiumController::class, 'store'])->name('stadiums.store');
 Route::get('/stadiums/{id}', [StadiumController::class, 'show'])->name('stadiums.show');
 
-// Chỉ admin mới có thể thêm/sửa/xóa sân
-Route::middleware(['admin'])->group(function () {
-    Route::get('/stadiums/create', [StadiumController::class, 'create'])->name('stadiums.create');
-    Route::post('/stadiums', [StadiumController::class, 'store'])->name('stadiums.store');
-    Route::get('/stadiums/{id}/edit', [StadiumController::class, 'edit'])->name('stadiums.edit');
-    Route::put('/stadiums/{id}', [StadiumController::class, 'update'])->name('stadiums.update');
-    Route::delete('/stadiums/{id}', [StadiumController::class, 'destroy'])->name('stadiums.destroy');
-});
+
+Route::post('/stadium/{stadiumId}/images', [StadiumImageController::class, 'store'])->name('stadium.images.store');
+Route::get('/stadium/{stadiumId}/images', [StadiumImageController::class, 'show'])->name('stadium.images.show');
+Route::delete('/stadiums/image/{image}', [StadiumController::class, 'deleteImage'])->name('stadiums.deleteImage');

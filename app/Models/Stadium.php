@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StadiumImage;
 
 class Stadium extends Model
 {
@@ -18,5 +19,11 @@ class Stadium extends Model
         'price_per_hour',
         'field_count',
         'encrypted_image'
+        
     ];
+
+    public function images()
+    {
+        return $this->hasMany(StadiumImage::class);
+    }
 }
