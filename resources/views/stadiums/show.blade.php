@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<link href="{{ asset('css/stadium.css') }}" rel="stylesheet">
+<link href="{{ asset('css/stadium_show.css') }}" rel="stylesheet">
 @section('title', 'Chi tiết sân bóng')
 
 @section('content')

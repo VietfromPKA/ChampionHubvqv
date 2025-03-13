@@ -1,5 +1,5 @@
 @extends('layouts.app')
-    <link href="{{ asset('css/stadium.css') }}" rel="stylesheet">
+<link href="{{ asset('css/stadium.css') }}" rel="stylesheet">
 @section('content')
     <div class="container">
         <h2>{{ isset($stadium) ? 'Chỉnh sửa sân bóng' : 'Thêm sân bóng mới' }}</h2>
@@ -54,7 +54,11 @@
                         value="{{ old('longitude', $stadium->longitude ?? 105.8542) }}">
                 </div>
 
-                <button type="submit" class="btn btn-primary">{{ isset($stadium) ? 'Cập nhật' : 'Thêm mới' }}</button>
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary">{{ isset($stadium) ? 'Cập nhật' : 'Thêm mới' }}</button>
+                    <a href="{{ route('stadiums.index') }}" class="btn btn-primary">Quay lại</a>
+                </div>
+
             </div>
 
             <div class="map-column">
