@@ -26,4 +26,6 @@ class Stadium extends Model
     {
         return $this->hasMany(StadiumImage::class);
     }
+
+    
 }

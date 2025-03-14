@@ -22,9 +22,12 @@ class Tournament extends Model
     }
     public function games()
     {
-        
+
         return $this->hasMany(Game::class);
     }
 
-
+    public function matchSchedules()
+    {
+        return $this->hasMany(MatchSchedule::class, 'tournament_id');
+    }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\StadiumImageController;
+use App\Http\Controllers\MatchScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,33 @@ Route::prefix('games')->name('games.')->group(function () {
     Route::put('{id}', [GameController::class, 'update'])->name('update'); // Cập nhật trận đấu
     Route::delete('{id}', [GameController::class, 'destroy'])->name('destroy'); // Xóa trận đấu
 });
+
+
+
+// Các route cho lịch thi đấu
+Route::prefix('matches')->name('matches.')->middleware('auth')->group(function () {
+    // Danh sách lịch thi đấu
+    Route::get('/', [MatchScheduleController::class, 'index'])->name('index');
+
+    // Tạo lịch thi đấu (có thể truyền tournament_id nếu tạo từ trong giải đấu)
+    Route::get('create/{tournament_id?}', [MatchScheduleController::class, 'create'])->name('create');
+
+    // Lưu lịch mới
+    Route::post('store', [MatchScheduleController::class, 'store'])->name('store');
+
+    // Hiển thị chi tiết một lịch thi đấu
+    Route::get('{id}', [MatchScheduleController::class, 'show'])->name('show');
+
+    // Hiển thị form chỉnh sửa lịch thi đấu
+    Route::get('{id}/edit', [MatchScheduleController::class, 'edit'])->name('edit');
+
+    // Cập nhật lịch thi đấu
+    Route::put('{id}', [MatchScheduleController::class, 'update'])->name('update');
+
+    // Xóa lịch thi đấu
+    Route::delete('{id}', [MatchScheduleController::class, 'destroy'])->name('destroy');
+});
+
 
 Route::get('/profile', [AuthController::class, 'profile'])->name('user.index');
 Route::get('/tournaments', [PublicController::class, 'tournament'])->name('public.tournaments.index');
