@@ -6,6 +6,7 @@ use App\Models\Stadium;
 use Illuminate\Http\Request;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Models\StadiumImage;
+use App\Models\MatchSchedule;
 class StadiumController extends Controller
 {
     // Hiển thị danh sách sân bóng
@@ -69,10 +70,22 @@ class StadiumController extends Controller
 
     // Hiển thị chi tiết sân bóng
     public function show($id)
-    {
-        $stadium = Stadium::findOrFail($id);
-        return view('stadiums.show', compact('stadium'));
-    }
+{
+    $stadium = Stadium::with('images')->findOrFail($id);
+    
+    $fieldCount = $stadium->field_count;
+
+    // Lấy danh sách trận đấu của sân này, sắp xếp theo ngày & giờ thi đấu
+    $matches = MatchSchedule::where('stadium_id', $id)
+        ->orderBy('match_date') // Sắp xếp theo ngày + giờ đấu
+        ->with(['team1', 'team2', 'tournament']) // Load thông tin đội bóng và giải đấu
+        ->get();
+
+    return view('stadiums.show', compact('stadium', 'matches', 'fieldCount'));
+}
+
+
+
 
     public function uploadImage(Request $request, $stadiumId)
     {

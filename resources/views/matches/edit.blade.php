@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('styles')
+    <link href="{{ asset('css/matches.css') }}" rel="stylesheet">
+@endsection
 @section('content')
     <div class="container">
         <h1>Chỉnh Sửa Lịch Thi Đấu - {{ $tournament->name }}</h1>
@@ -48,7 +50,24 @@
 
             <div class="form-group">
                 <label for="match_date">Ngày Thi Đấu</label>
-                <input type="datetime-local" name="match_date" id="match_date" class="form-control" value="{{ \Carbon\Carbon::parse($match->match_date)->format('Y-m-d\TH:i') }}" required>
+                <input type="date" name="match_date" id="match_date" class="form-control" value="{{ \Carbon\Carbon::parse($match->match_date)->format('Y-m-d') }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="match_time">Chọn Ca Thi Đấu</label>
+                <select name="match_time" id="match_time" class="form-control" required>
+                    @php
+                        $startTime = strtotime('06:00');
+                        $endTime = strtotime('22:00');
+                        $currentTime = \Carbon\Carbon::parse($match->match_date)->format('H:i'); // Lấy giờ hiện tại của trận đấu
+                        while ($startTime < $endTime) {
+                            $timeSlot = date('H:i', $startTime) . ' - ' . date('H:i', $startTime + 5400); // 90 phút = 5400 giây
+                            $selected = ($currentTime == date('H:i', $startTime)) ? 'selected' : '';
+                            echo "<option value='{$timeSlot}' {$selected}>{$timeSlot}</option>";
+                            $startTime += 5400;
+                        }
+                    @endphp
+                </select>
             </div>
 
             <div class="form-group">

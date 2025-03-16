@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('styles')
+    <link href="{{ asset('css/matches.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
     <div class="container">
@@ -46,7 +49,22 @@
 
             <div class="form-group">
                 <label for="match_date">Ngày Thi Đấu</label>
-                <input type="datetime-local" name="match_date" id="match_date" class="form-control" required>
+                <input type="date" name="match_date" id="match_date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="match_time">Chọn Ca Thi Đấu</label>
+                <select name="match_time" id="match_time" class="form-control" required>
+                    @php
+                        $startTime = strtotime('06:00');
+                        $endTime = strtotime('22:00');
+                        while ($startTime < $endTime) {
+                            $timeSlot = date('H:i', $startTime) . ' - ' . date('H:i', $startTime + 5400); // 90 phút = 5400 giây
+                            echo "<option value='{$timeSlot}'>{$timeSlot}</option>";
+                            $startTime += 5400;
+                        }
+                    @endphp
+                </select>
             </div>
 
             <div class="form-group">
@@ -67,7 +85,7 @@
                 const selectedOption = stadiumSelect.options[stadiumSelect.selectedIndex];
                 const maxFields = selectedOption.getAttribute("data-fields") || 1;
                 fieldSelect.innerHTML = "";
-                
+
                 for (let i = 1; i <= maxFields; i++) {
                     const option = document.createElement("option");
                     option.value = i;

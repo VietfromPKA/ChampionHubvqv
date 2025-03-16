@@ -33,6 +33,9 @@
             <td>{{ $match->location }}</td>
         </tr>
     </table>
-    <a href="{{ route('matches.index') }}" class="btn btn-secondary">Quay lại</a>
+    <a href="{{ route('tournaments.show', $tournament->id) }}" class="tournament-link">
+                        {{ $tournament->name }}
+                    </a>
+    <!-- <a href="{{ route('tournament.show') }}" class="btn btn-secondary">Quay lại</a> -->
 </div>
 @endsection

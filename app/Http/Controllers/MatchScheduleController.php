@@ -28,7 +28,6 @@ class MatchScheduleController extends Controller
         return view('matches.create', compact('tournament', 'teams', 'stadiums'));
     }
 
-
     // Lưu lịch thi đấu mới
     public function store(Request $request)
     {
@@ -39,8 +38,13 @@ class MatchScheduleController extends Controller
             'stadium_id' => 'required|exists:stadiums,id',
             'field_number' => 'required|integer|min:1',
             'match_date' => 'required|date',
+            'match_time' => 'required|string',
             'location' => 'required|string|max:255',
         ]);
+
+        // Kết hợp ngày và giờ thành datetime
+        $startTime = explode(' - ', $request->match_time)[0]; // Lấy thời gian bắt đầu (ví dụ: "06:00")
+        $matchDateTime = $request->match_date . ' ' . $startTime; // Kết hợp ngày và giờ
 
         MatchSchedule::create([
             'tournament_id' => $request->tournament_id,
@@ -48,15 +52,13 @@ class MatchScheduleController extends Controller
             'team2_id' => $request->team2_id,
             'stadium_id' => $request->stadium_id,
             'field_number' => $request->field_number,
-            'match_date' => $request->match_date,
+            'match_date' => $matchDateTime, // Lưu giá trị datetime
             'location' => $request->location,
         ]);
 
         return redirect()->route('tournament.show', ['id' => $request->tournament_id])
             ->with('success', 'Lịch thi đấu đã được tạo thành công!');
-
     }
-
 
     // Hiển thị chi tiết một lịch thi đấu
     public function show($id)
@@ -86,31 +88,41 @@ class MatchScheduleController extends Controller
             'stadium_id' => 'required|exists:stadiums,id',
             'field_number' => 'required|integer|min:1',
             'match_date' => 'required|date',
+            'match_time' => 'required|string',
             'location' => 'required|string|max:255',
         ]);
-
+    
+        // Kết hợp ngày và giờ thành datetime
+        $startTime = explode(' - ', $request->match_time)[0]; // Lấy thời gian bắt đầu (ví dụ: "06:00")
+        $matchDateTime = $request->match_date . ' ' . $startTime; // Kết hợp ngày và giờ
+    
         $match = MatchSchedule::findOrFail($id);
-
+    
         // Chỉ cập nhật các trường cần thiết
         $match->update([
             'team1_id' => $request->team1_id,
             'team2_id' => $request->team2_id,
             'stadium_id' => $request->stadium_id,
             'field_number' => $request->field_number,
-            'match_date' => $request->match_date,
+            'match_date' => $matchDateTime, // Lưu giá trị datetime
             'location' => $request->location,
         ]);
-
-        return redirect()->route('matches.index')->with('success', 'Lịch thi đấu đã được cập nhật!');
+    
+        // Chuyển hướng về trang chi tiết giải đấu
+        return redirect()->route('tournament.show', ['id' => $match->tournament_id])
+            ->with('success', 'Lịch thi đấu đã được cập nhật!');
     }
 
 
     // Xóa một lịch thi đấu
     public function destroy($id)
-    {
-        $match = MatchSchedule::findOrFail($id);
-        $match->delete();
+{
+    $match = MatchSchedule::findOrFail($id);
+    $tournamentId = $match->tournament_id; // Lấy tournament_id trước khi xóa
+    $match->delete();
 
-        return redirect()->route('matches.index')->with('success', 'Lịch thi đấu đã được xóa!');
-    }
+    // Chuyển hướng về trang chi tiết giải đấu
+    return redirect()->route('tournament.show', ['id' => $tournamentId])
+        ->with('success', 'Lịch thi đấu đã được xóa!');
+}
 }

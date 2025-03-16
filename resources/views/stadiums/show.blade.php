@@ -1,11 +1,13 @@
 @extends('layouts.app')
+
 <link href="{{ asset('css/stadium_show.css') }}" rel="stylesheet">
+
 @section('title', 'Chi tiết sân bóng')
 
 @section('content')
     <div class="container stadium-detail-container">
-
         <h2 class="card-title stadium-name">Sân bóng: {{ $stadium->name }}</h2>
+
         <div class="stadium-images">
             {{-- Hiển thị ảnh nhiều ảnh nếu có --}}
             @if($stadium->images->isNotEmpty())
@@ -71,12 +73,14 @@
                 <div class="stadium-lich" id="lich-{{ $i }}" style="display: none;">
                     <div class="week-navigation">
                         <button class="btn btn-secondary" onclick="changeWeek({{ $i }}, -1)">Tuần trước</button>
-                        <h4 class="lich-title">Lịch đặt sân {{ $i }} (Tuần:
+                        <h4 class="lich-title">
+                            Lịch đặt sân {{ $i }} (Tuần:
                             <span id="start-week-{{ $i }}">{{ \Carbon\Carbon::now()->startOfWeek()->format('d/m/Y') }}</span> -
                             <span id="end-week-{{ $i }}">{{ \Carbon\Carbon::now()->endOfWeek()->format('d/m/Y') }}</span>)
                         </h4>
                         <button class="btn btn-secondary" onclick="changeWeek({{ $i }}, 1)">Tuần sau</button>
                     </div>
+
                     <table class="lich-table" id="lich-table-{{ $i }}">
                         <thead>
                             <tr>
@@ -91,28 +95,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($time = 6; $time <= 21; $time += 1.5)
+                            @for ($hour = 6; $hour < 22; $hour += 1.5)
                                             @php
-                                                $hour = floor($time); // Lấy phần nguyên (giờ)
-                                                $minute = ($time - $hour) * 60; // Lấy phần thập phân và chuyển thành phút
-                                                $startTime = sprintf('%02d:%02d', $hour, $minute); // Định dạng HH:MM
-                                                $endHour = floor($time + 1.5); // Giờ kết thúc
-                                                $endMinute = (($time + 1.5) - $endHour) * 60; // Phút kết thúc
-                                                $endTime = sprintf('%02d:%02d', $endHour, $endMinute); // Định dạng HH:MM (kết thúc)
-                                                $timeDisplay = $startTime . ' - ' . $endTime; // Khoảng thời gian
+                                                $startHour = floor($hour);
+                                                $startMinute = ($hour - $startHour) * 60;
+                                                $endHour = floor($hour + 1.5);
+                                                $endMinute = ($hour + 1.5 - $endHour) * 60;
+                                                $timeRange = sprintf('%02d:%02d - %02d:%02d', $startHour, $startMinute, $endHour, $endMinute);
                                             @endphp
                                             <tr>
-                                                <td>{{ $timeDisplay }}</td>
-                                                <td id="field-{{ $i }}-day-1-hour-{{ $hour }}-minute-{{ $minute }}"></td>
-                                                <td id="field-{{ $i }}-day-2-hour-{{ $hour }}-minute-{{ $minute }}"></td>
-                                                <td id="field-{{ $i }}-day-3-hour-{{ $hour }}-minute-{{ $minute }}"></td>
-                                                <td id="field-{{ $i }}-day-4-hour-{{ $hour }}-minute-{{ $minute }}"></td>
-                                                <td id="field-{{ $i }}-day-5-hour-{{ $hour }}-minute-{{ $minute }}"></td>
-                                                <td id="field-{{ $i }}-day-6-hour-{{ $hour }}-minute-{{ $minute }}"></td>
-                                                <td id="field-{{ $i }}-day-7-hour-{{ $hour }}-minute-{{ $minute }}"></td>
+                                                <td>{{ $timeRange }}</td>
+                                                @for ($day = 1; $day <= 7; $day++)
+                                                    <td id="field-{{ $i }}-day-{{ $day }}-hour-{{ $startHour }}-minute-{{ $startMinute }}"></td>
+                                                @endfor
                                             </tr>
                             @endfor
                         </tbody>
+
                     </table>
                 </div>
             @endfor
@@ -122,70 +121,85 @@
     </div>
 
     <script>
+        const matches = @json($matches);
+
         function toggleField(fieldId) {
-            const allFields = document.querySelectorAll('.stadium-lich');
-            const targetField = document.getElementById('lich-' + fieldId);
-
-            // Ẩn tất cả các lịch sân trước khi hiển thị sân được chọn
-            allFields.forEach(field => {
-                if (field !== targetField) {
-                    field.style.display = 'none';
-                }
-            });
-
-            // Chuyển đổi trạng thái hiển thị của sân được chọn
-            if (targetField.style.display === 'none' || targetField.style.display === '') {
-                targetField.style.display = 'block';
-            } else {
-                targetField.style.display = 'none';
-            }
+            document.querySelectorAll('.stadium-lich').forEach(field => field.style.display = 'none');
+            document.getElementById('lich-' + fieldId).style.display = 'block';
+            updateSchedule(fieldId);
         }
 
         function changeWeek(fieldId, direction) {
-            // Lấy ngày bắt đầu và kết thúc tuần hiện tại
-            const startWeekElement = document.getElementById(`start-week-${fieldId}`);
-            const endWeekElement = document.getElementById(`end-week-${fieldId}`);
+            const startWeek = document.getElementById(`start-week-${fieldId}`);
+            const endWeek = document.getElementById(`end-week-${fieldId}`);
+            const startDate = new Date(startWeek.textContent.split('/').reverse().join('-'));
+            const endDate = new Date(endWeek.textContent.split('/').reverse().join('-'));
 
-            // Chuyển đổi ngày từ chuỗi sang đối tượng Date
-            const currentStartDate = new Date(startWeekElement.textContent.split('/').reverse().join('-'));
-            const currentEndDate = new Date(endWeekElement.textContent.split('/').reverse().join('-'));
+            startDate.setDate(startDate.getDate() + (direction * 7));
+            endDate.setDate(endDate.getDate() + (direction * 7));
 
-            // Tính toán ngày bắt đầu và kết thúc của tuần mới
-            const newStartDate = new Date(currentStartDate);
-            const newEndDate = new Date(currentEndDate);
+            const formatDate = date => `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+            startWeek.textContent = formatDate(startDate);
+            endWeek.textContent = formatDate(endDate);
 
-            if (direction === 1) {
-                // Tuần sau: thêm 7 ngày
-                newStartDate.setDate(newStartDate.getDate() + 7);
-                newEndDate.setDate(newEndDate.getDate() + 7);
-            } else if (direction === -1) {
-                // Tuần trước: trừ 7 ngày
-                newStartDate.setDate(newStartDate.getDate() - 7);
-                newEndDate.setDate(newEndDate.getDate() - 7);
+            updateSchedule(fieldId);
+        }
+
+        function updateSchedule(fieldId) {
+            const startWeekText = document.getElementById(`start-week-${fieldId}`).textContent;
+            const endWeekText = document.getElementById(`end-week-${fieldId}`).textContent;
+
+            const startDateParts = startWeekText.split('/');
+            const endDateParts = endWeekText.split('/');
+            const startDate = new Date(`${startDateParts[2]}-${startDateParts[1]}-${startDateParts[0]}`);
+            const endDate = new Date(`${endDateParts[2]}-${endDateParts[1]}-${endDateParts[0]}`);
+
+            const filteredMatches = matches.filter(match => {
+                const matchDate = new Date(match.match_date);
+                matchDate.setHours(0, 0, 0, 0);
+
+                return (
+                    match.stadium_id === {{ $stadium->id }} &&
+                    match.field_number === fieldId &&
+                    matchDate >= startDate &&
+                    matchDate <= endDate
+                );
+            });
+
+            const table = document.getElementById(`lich-table-${fieldId}`).getElementsByTagName('tbody')[0];
+            for (let row of table.rows) {
+                for (let i = 1; i < row.cells.length; i++) {
+                    row.cells[i].innerHTML = ''; // 🔹 Xóa nội dung trước đó
+                    row.cells[i].classList.remove('booked');
+                }
             }
 
-            // Định dạng lại ngày thành chuỗi "dd/mm/yyyy"
-            const formatDate = (date) => {
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                return `${day}/${month}/${year}`;
-            };
+            filteredMatches.forEach(match => {
+                const matchDate = new Date(match.match_date);
+                let dayOfWeek = matchDate.getDay();
+                dayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek; // 🔹 Chủ Nhật thành Thứ 7
 
-            // Cập nhật ngày trên giao diện
-            startWeekElement.textContent = formatDate(newStartDate);
-            endWeekElement.textContent = formatDate(newEndDate);
+                const matchHour = parseInt(match.match_date.split(' ')[1].split(':')[0], 10);
+                const matchMinute = parseInt(match.match_date.split(' ')[1].split(':')[1], 10);
 
-            // Gọi hàm để cập nhật dữ liệu lịch (nếu cần)
-            updateSchedule(fieldId, newStartDate, newEndDate);
+                const slotId = `field-${fieldId}-day-${dayOfWeek}-hour-${matchHour}-minute-${matchMinute}`;
+                const cell = document.getElementById(slotId);
+
+                if (cell) {
+                    // 🔹 Lấy tên giải đấu
+                    const tournamentName = match.tournament ? match.tournament.name : "Trận tự do";
+
+                    // 🔹 Hiển thị tên giải đấu lên trên, các đội xuống dòng
+                    cell.innerHTML = `<strong>${tournamentName}</strong><br>${match.team1.name} vs ${match.team2.name}`;
+
+                    // 🔹 Bôi đỏ ô này
+                    cell.classList.add('booked');
+                }
+            });
         }
 
-        function updateSchedule(fieldId, startDate, endDate) {
-            // Gọi API hoặc cập nhật dữ liệu lịch dựa trên fieldId, startDate, và endDate
-            console.log(`Cập nhật lịch cho sân ${fieldId} từ ${startDate} đến ${endDate}`);
-            // Thêm logic cập nhật dữ liệu lịch ở đây
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleField(1);
+        });
     </script>
-
-
 @endsection

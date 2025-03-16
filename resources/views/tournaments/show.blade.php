@@ -1,95 +1,123 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="{{ asset('css/qlygiaidau.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tournament_show.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="tournament-details">
-        <h1 class="tournament-title">{{ $tournament->name }}</h1>
-        <p class="tournament-date"><strong>Thời gian:</strong> Từ {{ $tournament->start_date }} đến
-            {{ $tournament->end_date }}</p>
+    <div class="tournament-container">
+        <header class="tournament-header">
+            <h1 class="tournament-title" style="color : white">Giải đấu: {{ $tournament->name }}</h1>
+            <p class="tournament-date" style="color : white"><strong>Thời gian: </strong>từ ngày {{ $tournament->start_date }} đến ngày
+                {{ $tournament->end_date }}</p>
+            
+        </header>
 
-        <h2 class="team-list-title">Danh sách đội bóng</h2>
-        <button class="toggle-teams-btn">Hiển thị danh sách đội bóng</button>
-        @if ($tournament->teams->isEmpty())
-            <p class="no-teams">Không có đội bóng nào tham gia giải đấu này.</p>
-        @else
-            <div class="team-list">
-                @foreach ($tournament->teams->chunk(3) as $teamChunk)
-                    <div class="team-row">
-                        @foreach ($teamChunk as $team)
-                            <div class="team-item">
-                                <strong class="team-name">Tên đội:</strong> {{ $team->name }}<br>
-                                <strong class="coach-name">Huấn luyện viên:</strong> {{ $team->coach_name ?? 'Không có thông tin' }}
+        <!-- Danh sách đội bóng -->
+        <section class="teams-section">
+            <h2 class="section-title">Danh sách đội bóng</h2>
+            <button class="toggle-teams-btn">Hiển thị danh sách đội</button>
+            @if ($tournament->teams->isEmpty())
+                <p class="no-teams">Không có đội bóng nào tham gia giải đấu này.</p>
+            @else
+                <div class="team-list">
+                    @foreach ($tournament->teams->chunk(3) as $teamChunk)
+                        <div class="team-row">
+                            @foreach ($teamChunk as $team)
+                                <div class="team-item">
+                                    <strong class="team-name">Tên đội:</strong> {{ $team->name }}<br>
+                                    <strong class="coach-name">Huấn luyện viên:</strong> {{ $team->coach_name ?? 'Không có thông tin' }}
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </section>
+
+        <!-- Lịch thi đấu -->
+        <section class="schedule-section">
+            <h2 class="section-title">Lịch thi đấu</h2>
+            <div class="match-card-container">
+                @foreach ($tournament->matchSchedules->sortBy('match_date') as $match)
+                    <div class="match-card">
+                        <div class="match-header">
+                            <span class="match-date">{{ date('d/m/Y H:i', strtotime($match->match_date)) }}</span>
+                            <span class="schedule-type">{{ ucfirst($match->schedule_type) }}</span>
+                        </div>
+                        <div class="match-body">
+                            <div class="teams">
+                                <span class="team">{{ $match->team1->name }}</span>
+                                <span class="vs">vs</span>
+                                <span class="team">{{ $match->team2->name }}</span>
                             </div>
-                        @endforeach
+                            <p class="match-info"><strong>Sân:</strong> {{ $match->stadium->name }} - Số
+                                {{ $match->field_number }}</p>
+                            <p class="match-info"><strong>Địa điểm:</strong> {{ $match->location }}</p>
+                        </div>
+                        <div class="match-actions">
+                            <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Chỉnh sửa</a>
+                            <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Cập nhật tỷ số</a>
+                            <form action="{{ route('matches.destroy', $match->id) }}" method="POST"
+                                onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </div>
                     </div>
                 @endforeach
             </div>
-        @endif
+        </section>
 
-        <h2 class="game-schedule-title">Lịch thi đấu</h2>
-        @if ($tournament->matchSchedules->isEmpty())
-            <p class="no-games">Chưa có lịch thi đấu cho giải đấu này.</p>
-        @else
-            <table class="game-schedule-table">
+        <!-- Bảng xếp hạng -->
+        <section class="standings-section">
+            <h2 class="section-title">Bảng xếp hạng</h2>
+            <table class="standings-table">
                 <thead>
                     <tr>
-                        <th>Ngày giờ</th>
-                        <th>Đội 1</th>
-                        <th>Đội 2</th>
-                        <th>Sân thi đấu</th>
-                        <th>Số sân</th>
-                        <th>Loại lịch đấu</th>
-                        <th>Địa điểm</th>
-                        <th>Hành động</th>
+                        <th>STT</th>
+                        <th>Đội</th>
+                        <th>Trận</th>
+                        <th>Thắng</th>
+                        <th>Hòa</th>
+                        <th>Thua</th>
+                        <th>Hiệu số</th>
+                        <th>Điểm</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tournament->matchSchedules as $matchSchedule)
+                    @foreach ($tournament->teams as $index => $team)
                         <tr>
-                            <td>{{ $matchSchedule->match_date }}</td>
-                            <td>{{ $matchSchedule->team1->name }}</td>
-                            <td>{{ $matchSchedule->team2->name }}</td>
-                            <td>{{ $matchSchedule->stadium->name }}</td>
-                            <td>{{ $matchSchedule->field_number }}</td>
-                            <td>{{ ucfirst($matchSchedule->schedule_type) }}</td>
-                            <td>{{ $matchSchedule->location }}</td>
-                            <td>
-                                <a href="{{ route('matches.edit', $matchSchedule->id) }}" class="btn btn-primary">Chỉnh sửa</a>
-                                <form action="{{ route('matches.destroy', $matchSchedule->id) }}" method="POST"
-                                    style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa trận đấu này?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Xóa</button>
-                                </form>
-                            </td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $team->name }}</td>
+                            <td>{{ $team->matches_played }}</td>
+                            <td>{{ $team->wins }}</td>
+                            <td>{{ $team->draws }}</td>
+                            <td>{{ $team->losses }}</td>
+                            <td>{{ $team->goal_difference }}</td>
+                            <td>{{ $team->points }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        @endif
+        </section>
 
-        <!-- Nút tạo lịch đấu mới -->
-        <a href="{{ route('matches.create', ['tournamentId' => $tournament->id]) }}" class="btn btn-success">
-            Tạo lịch đấu mới
-        </a>
-
-
-        <a href="{{ route('tournament.index') }}" class="back-link">Quay lại giải đấu</a>
+        <!-- Hành động -->
+        <div class="tournament-actions">
+            <a href="{{ route('matches.create', ['tournamentId' => $tournament->id]) }}" class="btn action-btn">Tạo trận
+                đấu</a>
+            <a href="{{ route('tournament.index') }}" class="btn action-btn">Quay lại</a>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const toggleButton = document.querySelector('.toggle-teams-btn');
+            const toggleBtn = document.querySelector('.toggle-teams-btn');
             const teamList = document.querySelector('.team-list');
-
-            toggleButton.addEventListener('click', function () {
-                teamList.classList.toggle('show');
-                toggleButton.textContent = teamList.classList.contains('show')
-                    ? 'Ẩn danh sách đội bóng'
-                    : 'Hiển thị danh sách đội bóng';
+            toggleBtn.addEventListener('click', function () {
+                teamList.classList.toggle('hidden');
+                toggleBtn.textContent = teamList.classList.contains('hidden') ? 'Hiển thị danh sách đội' : 'Ẩn danh sách đội';
             });
         });
     </script>
