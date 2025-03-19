@@ -57,7 +57,7 @@
                         </div>
                         <div class="match-actions">
                             <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Chỉnh sửa</a>
-                            <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Cập nhật tỷ số</a>
+                            <a class="open-score-form btn btn-primary" data-match-id="{{ $match->id }}">Cập nhật tỷ số</a>
                             <form action="{{ route('matches.destroy', $match->id) }}" method="POST"
                                 onsubmit="return confirm('Bạn có chắc muốn xóa?');">
                                 @csrf
@@ -69,6 +69,27 @@
                 @endforeach
             </div>
         </section>
+
+        <div id="scoreForm" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-lg">
+            <div class="w-full max-w-md p-8 bg-white rounded-3xl shadow-2xl transform transition-all scale-95 hover:scale-100">
+                <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-6">Cập Nhật Tỉ Số</h2>
+                <form id="scoreUpdateForm" class="space-y-6">
+                    <input type="hidden" id="matchId">
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Tỉ số đội 1</label>
+                        <input type="number" id="scoreTeam1" class="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-md placeholder-gray-400" placeholder="0">
+                    </div>
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Tỉ số đội 2</label>
+                        <input type="number" id="scoreTeam2" class="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-md placeholder-gray-400" placeholder="0">
+                    </div>
+                    <div class="flex justify-between mt-6">
+                        <button type="button" id="closeFormBtn" class="px-6 py-3 text-gray-700 bg-gray-300 rounded-2xl hover:bg-gray-400 transition-all shadow-md">Hủy</button>
+                        <button type="submit" class="px-6 py-3 text-white bg-blue-600 rounded-2xl hover:bg-blue-700 transition-all shadow-lg">Cập Nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Bảng xếp hạng -->
         <section class="standings-section">
@@ -119,6 +140,16 @@
                 teamList.classList.toggle('hidden');
                 toggleBtn.textContent = teamList.classList.contains('hidden') ? 'Hiển thị danh sách đội' : 'Ẩn danh sách đội';
             });
+        });
+
+        document.querySelectorAll('.open-score-form').forEach(button => {
+            button.addEventListener('click', function () {
+                document.getElementById('scoreForm').classList.remove('hidden');
+            });
+        });
+
+        document.getElementById('closeFormBtn').addEventListener('click', function () {
+            document.getElementById('scoreForm').classList.add('hidden');
         });
     </script>
 @endsection
