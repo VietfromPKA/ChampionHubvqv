@@ -9,10 +9,7 @@ class TournamentSeeder extends Seeder
 {
     public function run()
     {
-        // Số lượng giải đấu muốn tạo
-        $numberOfTournaments = 9;
-
-        for ($i = 1; $i <= $numberOfTournaments; $i++) {
+        for ($i = 1; $i <= 9; $i++) {
             DB::table('tournaments')->insert([
                 'user_id' => 1, // Gán cố định user_id = 1
                 'name' => 'Tournament ' . $i,

@@ -9,12 +9,12 @@ class TeamSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             DB::table('teams')->insert([
-                'name' => 'Team ' . $i,
-                'coach_name' => 'Coach ' . $i,
-                'user_id' => 1, // Gán user_id cố định
-                'tournament_id' => rand(1, 9), // Giả sử bảng tournaments có 9 giải
+                'name' => '3-Team ' . $i,
+                'coach_name' => 'Coach ' . (20 + $i),
+                'user_id' => 20 + $i, 
+                'tournament_id' => 3, 
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
