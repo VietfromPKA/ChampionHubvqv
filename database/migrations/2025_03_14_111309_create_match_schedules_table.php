@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->enum('schedule_type', ['tournament', 'individual']); // Loại lịch
             $table->dateTime('match_date'); // Ngày giờ thi đấu
             $table->string('location'); // Địa điểm (có thể khác với sân)
+            $table->string('scoreTeam1')->nullable(); // Kết quả team 1(có thể null nếu chưa thi đấu)
+            $table->string('scoreTeam2')->nullable(); // Kết quả team 2(có thể null nếu chưa thi đấu)
             $table->timestamps();
 
             // Liên kết khóa ngoại
