@@ -128,7 +128,7 @@
         <div class="tournament-actions">
             <a href="{{ route('matches.create', ['tournamentId' => $tournament->id]) }}" class="btn action-btn">Tạo trận
                 đấu</a>
-            <a href="{{ route('tournament.index') }}" class="btn action-btn">Quay lại</a>
+            <a href="{{ route('user.index') }}" class="btn action-btn">Quay lại</a>
         </div>
     </div>
 

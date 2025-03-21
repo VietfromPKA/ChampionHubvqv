@@ -32,10 +32,10 @@
 
                 @if(auth()->check())
                     <li class="navbar-item">
-                        <a href="{{ route('tournament.index') }}" class="navbar-link">Giải đấu</a>
+                        <a href="{{ route('tournament.index') }}" class="navbar-link">Quản lý giải đấu</a>
                     </li>
                     <li class="navbar-item">
-                        <a href="{{ route('team.index') }}" class="navbar-link">Đội bóng</a>
+                        <a href="{{ route('team.index') }}" class="navbar-link">Quản lý đội bóng</a>
                     </li>
                     <li class="navbar-item">
                         <a href="{{ route('user.index') }}" class="navbar-link">{{ auth()->user()->name }}</a>
