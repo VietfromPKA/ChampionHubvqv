@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('css/qlydoibong.css') }}" rel="stylesheet">
+<link href="{{ asset('css/form_db.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

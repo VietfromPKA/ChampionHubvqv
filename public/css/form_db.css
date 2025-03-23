@@ -1,0 +1,460 @@
+:root {
+    /* Màu sắc chính */
+    --primary-color: #4338ca;
+    --primary-light: #818cf8;
+    --primary-dark: #312e81;
+    --accent-color: #0ea5e9;
+    --accent-dark: #0284c7;
+    --danger-color: #ef4444;
+    --danger-dark: #b91c1c;
+    --success-color: #10b981;
+    --success-dark: #059669;
+
+    /* Màu nền và text */
+    --background: #f8fafc;
+    --light-bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --card-bg-alt: #f9fafb;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-tertiary: #94a3b8;
+    --border-color: #e2e8f0;
+    --focus-ring: rgba(79, 70, 229, 0.2);
+
+    /* Shadow và border */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+
+    /* Gradients và transitions */
+    --gradient-primary: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    --gradient-secondary: linear-gradient(135deg, #6366f1, #14b8a6);
+    --gradient-success: linear-gradient(135deg, #10b981, #0d9488);
+    --gradient-danger: linear-gradient(135deg, #ef4444, #e11d48);
+    --transition-base: all 0.2s ease;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Base styles */
+body {
+    background-color: var(--background);
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container chính */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tiêu đề form */
+.page-title {
+    text-align: center;
+    font-size: clamp(1.5rem, 5vw, 2.25rem);
+    font-weight: 700;
+    margin: 2rem 0;
+    color: var(--text-primary);
+    position: relative;
+    padding-bottom: 1rem;
+    display: inline-block;
+    letter-spacing: -0.01em;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(60px, 30%, 80px);
+    height: 4px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+/* Form Container */
+.team-form {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    position: relative;
+    animation: fadeIn 0.6s ease-out;
+    overflow: hidden;
+}
+
+.team-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--gradient-primary);
+    box-shadow: 0 2px 10px rgba(79, 70, 229, 0.2);
+}
+
+/* Nhóm form */
+.form-group {
+    margin-bottom: 1.75rem;
+    position: relative;
+}
+
+/* Labels với hiệu ứng float */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+/* Input styles */
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+/* Điều chỉnh riêng cho select */
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+}
+
+select.form-control:focus {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234338ca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+/* Validation state */
+.form-control.is-invalid {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--danger-color);
+}
+
+/* Animation cho inputs */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.form-control.is-invalid:focus {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: var(--radius-md);
+    transition: var(--transition-bounce);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* Hiệu ứng "shine" cho nút */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    transition: var(--transition-smooth);
+}
+
+.btn:hover::after {
+    left: 150%;
+    transition-duration: 0.9s;
+}
+
+/* Button icon */
+.btn-primary::before {
+    content: '💾';
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+/* Form layout */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.btn-secondary {
+    background-color: var(--light-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: #e2e8f0;
+    color: var(--text-primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary::before {
+    content: '↩️';
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Hiệu ứng cho focus trên toàn form */
+.form-group:focus-within label {
+    color: var(--primary-color);
+}
+
+/* Hiệu ứng placeholder */
+.form-control::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.7;
+}
+
+/* Hiệu ứng khi nhấn vào input */
+.form-control:active {
+    transform: scale(0.99);
+}
+
+/* Ẩn autofill background của các trình duyệt */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-primary);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px var(--card-bg) inset;
+}
+
+/* Nút quay lại */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition-base);
+}
+
+.back-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.back-link::before {
+    content: '←';
+    margin-right: 0.35rem;
+}
+
+/* Animation cho form fields */
+.form-group {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideUp 0.4s ease-out forwards;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.form-group:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Nút có animation delay */
+.btn-primary {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideUp 0.4s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+/* Pattern nền cho form */
+.team-form::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(var(--border-color) 1px, transparent 1px),
+        radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    opacity: 0.1;
+    pointer-events: none;
+    border-radius: var(--radius-lg);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .team-form {
+        padding: 2rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .page-title {
+        margin: 1.5rem 0;
+    }
+
+    .btn {
+        padding: 0.75rem 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-form {
+        padding: 1.5rem 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.75rem;
+    }
+}
+
+/* Helper cho container của page-title */
+.title-container {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Cải thiện mobile text selection */
+@media (max-width: 480px) {
+
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+        /* Ngăn iOS zoom khi focus */
+    }
+}
