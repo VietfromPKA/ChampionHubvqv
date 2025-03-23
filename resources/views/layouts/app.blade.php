@@ -18,7 +18,6 @@
                 <li class="navbar-item"><a href="{{ route('public.tournaments.index')}}" class="navbar-link">Trang chủ</a></li>
                 <li class="navbar-item"><a href="{{ route('public.teams.index')}}" class="navbar-link">Danh sách đội bóng</a></li>
                 <li class="navbar-item"><a href="{{ route('public.stadiums.index') }}" class="navbar-link">Sân bóng</a></li>
-                <li class="navbar-item"><a href="" class="navbar-link">Tin tức</a></li>
                 @if(auth()->check())
                     <li class="navbar-item"><a href="{{ route('tournaments.index') }}" class="navbar-link">Quản lý giải đấu</a></li>
                     <li class="navbar-item"><a href="{{ route('teams.index') }}" class="navbar-link">Quản lý đội bóng</a></li>

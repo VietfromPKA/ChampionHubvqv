@@ -149,57 +149,72 @@
             const startWeekText = document.getElementById(`start-week-${fieldId}`).textContent;
             const endWeekText = document.getElementById(`end-week-${fieldId}`).textContent;
 
-            const startDateParts = startWeekText.split('/');
-            const endDateParts = endWeekText.split('/');
-            const startDate = new Date(`${startDateParts[2]}-${startDateParts[1]}-${startDateParts[0]}`);
-            const endDate = new Date(`${endDateParts[2]}-${endDateParts[1]}-${endDateParts[0]}`);
+            const [startDay, startMonth, startYear] = startWeekText.split('/').map(Number);
+            const [endDay, endMonth, endYear] = endWeekText.split('/').map(Number);
+            const startDate = new Date(startYear, startMonth - 1, startDay);
+            const endDate = new Date(endYear, endMonth - 1, endDay);
 
+            // Lọc trận đấu trong khoảng ngày đã chọn
             const filteredMatches = matches.filter(match => {
-                const matchDate = new Date(match.match_date);
+                const matchDate = new Date(match.match_date.split(' ')[0]); // Lấy ngày từ datetime
                 matchDate.setHours(0, 0, 0, 0);
 
                 return (
                     match.stadium_id === {{ $stadium->id }} &&
                     match.field_number === fieldId &&
-                    matchDate >= startDate &&
-                    matchDate <= endDate
+                    matchDate >= startDate && matchDate <= endDate
                 );
             });
 
             const table = document.getElementById(`lich-table-${fieldId}`).getElementsByTagName('tbody')[0];
+
+            // Xóa dữ liệu cũ
             for (let row of table.rows) {
                 for (let i = 1; i < row.cells.length; i++) {
-                    row.cells[i].innerHTML = ''; // 🔹 Xóa nội dung trước đó
+                    row.cells[i].innerHTML = '';
                     row.cells[i].classList.remove('booked');
                 }
             }
 
+            // Cập nhật lịch
             filteredMatches.forEach(match => {
-                const matchDate = new Date(match.match_date);
+                const matchDate = new Date(match.match_date.split(' ')[0]);
                 let dayOfWeek = matchDate.getDay();
-                dayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek; // 🔹 Chủ Nhật thành Thứ 7
+                dayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
 
-                const matchHour = parseInt(match.match_date.split(' ')[1].split(':')[0], 10);
-                const matchMinute = parseInt(match.match_date.split(' ')[1].split(':')[1], 10);
-
-                const slotId = `field-${fieldId}-day-${dayOfWeek}-hour-${matchHour}-minute-${matchMinute}`;
+                const [hour, minute] = match.match_date.split(' ')[1].split(':').map(Number);
+                const slotId = `field-${fieldId}-day-${dayOfWeek}-hour-${hour}-minute-${minute}`;
                 const cell = document.getElementById(slotId);
 
                 if (cell) {
-                    // 🔹 Lấy tên giải đấu
                     const tournamentName = match.tournament ? match.tournament.name : "Trận tự do";
-
-                    // 🔹 Hiển thị tên giải đấu lên trên, các đội xuống dòng
                     cell.innerHTML = `<strong>${tournamentName}</strong><br>${match.team1.name} vs ${match.team2.name}`;
-
-                    // 🔹 Bôi đỏ ô này
                     cell.classList.add('booked');
                 }
             });
+        }
+        function changeWeek(fieldId, direction) {
+            const startWeek = document.getElementById(`start-week-${fieldId}`);
+            const endWeek = document.getElementById(`end-week-${fieldId}`);
+
+            const [startDay, startMonth, startYear] = startWeek.textContent.split('/').map(Number);
+            const [endDay, endMonth, endYear] = endWeek.textContent.split('/').map(Number);
+            let startDate = new Date(startYear, startMonth - 1, startDay);
+            let endDate = new Date(endYear, endMonth - 1, endDay);
+
+            startDate.setDate(startDate.getDate() + direction * 7);
+            endDate.setDate(endDate.getDate() + direction * 7);
+
+            const formatDate = date => `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+            startWeek.textContent = formatDate(startDate);
+            endWeek.textContent = formatDate(endDate);
+
+            updateSchedule(fieldId);
         }
 
         document.addEventListener("DOMContentLoaded", function () {
             toggleField(1);
         });
+
     </script>
 @endsection

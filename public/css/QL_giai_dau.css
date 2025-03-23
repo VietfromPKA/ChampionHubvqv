@@ -1,0 +1,121 @@
+:root {
+    --primary-color: #6a11cb; /* Màu tím */
+    --primary-dark: #2575fc; /* Màu xanh dương */
+    --accent-color: #10b981; /* Màu xanh lá */
+    --danger-color: #ef4444; /* Màu đỏ */
+    --light-bg: #f9fafb; /* Màu nền nhẹ */
+    --card-bg: #ffffff; /* Màu nền thẻ */
+    --text-primary: #1f2937; /* Màu chữ chính */
+    --text-secondary: #4b5563; /* Màu chữ phụ */
+    --border-color: #e5e7eb; /* Màu viền */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius-md: 0.5rem;
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    background: var(--light-bg);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: var(--primary-color);
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+/* Bảng giải đấu */
+.tournament-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.tournament-table th, 
+.tournament-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tournament-table th {
+    background: var(--primary-color);
+    color: white;
+}
+
+.tournament-table tr:hover {
+    background: var(--light-bg);
+}
+
+/* Links */
+.tournament-link {
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: bold;
+}
+
+.tournament-link:hover {
+    color: var(--accent-color);
+}
+
+/* Nút hành động */
+.btn-edit {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.btn-edit:hover {
+    background: #0f9f6e;
+}
+
+.btn-delete {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+}

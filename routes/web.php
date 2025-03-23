@@ -61,6 +61,10 @@ Route::resource('teams', TeamController::class);
 
 //Các route liên quan đến stadium
 Route::resource('stadiums', StadiumController::class);
+Route::post('/stadiums/{id}/upload-image', [StadiumController::class, 'uploadImage'])->name('stadiums.uploadImage');
+Route::post('/stadium/{stadiumId}/images', [StadiumImageController::class, 'store'])->name('stadium.images.store');
+Route::get('/stadium/{stadiumId}/images', [StadiumImageController::class, 'show'])->name('stadium.images.show');
+Route::delete('/stadiums/image/{image}', [StadiumController::class, 'deleteImage'])->name('stadiums.deleteImage');
 
 // Các route liên quan đến match
 Route::resource('matches', MatchScheduleController::class);
