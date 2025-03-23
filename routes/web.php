@@ -67,14 +67,20 @@ Route::resource('matches', MatchScheduleController::class);
 Route::post('/matches/update-score', [MatchScheduleController::class, 'updateScore'])->name('matches.updateScore'); // cập nhật tỉ số trận đấu
 
 // Các route liên quan đến player
-Route::get('/teams/{team_id}/players', [PlayerController::class, 'index'])->name('players.index');
-Route::get('/teams/{team_id}/players/create', [PlayerController::class, 'create'])->name('players.create');
-Route::post('/teams/{team_id}/players', [PlayerController::class, 'store'])->name('players.store');
-Route::get('/teams/{team_id}/players/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
-Route::put('/teams/{team_id}/players/{player}', [PlayerController::class, 'update'])->name('players.update');
-Route::delete('/teams/{team_id}/players/{player}', [PlayerController::class, 'delete'])->name('players.destroy');
-Route::get('/teams/{team_id}/players/import', [PlayerController::class, 'showImportForm'])->name('players.importForm');
-Route::post('/teams/{team_id}/players/import', [PlayerController::class, 'import'])->name('players.import');
+
+
+
+Route::prefix('/teams/{team_id}/players')->group(function () {
+    Route::get('/', [PlayerController::class, 'index'])->name('players.index');
+    Route::get('/create', [PlayerController::class, 'create'])->name('players.create');
+    Route::post('/', [PlayerController::class, 'store'])->name('players.store');
+    Route::get('/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
+    Route::put('/{player}', [PlayerController::class, 'update'])->name('players.update');
+    Route::delete('/{player}', [PlayerController::class, 'delete'])->name('players.destroy');
+    Route::get('/import', [PlayerController::class, 'showImportForm'])->name('players.importForm');
+    Route::post('/import', [PlayerController::class, 'import'])->name('players.import');
+});
+
 
 // Các route liên quan đến user
 Route::get('/profile', [UserController::class, 'profile'])->name('user.index');
