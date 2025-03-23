@@ -12,11 +12,13 @@ return new class extends Migration {
             $table->unsignedBigInteger('team1_id'); // Đội 1
             $table->unsignedBigInteger('team2_id'); // Đội 2
             $table->unsignedBigInteger('stadium_id'); // Sân thi đấu
+            $table->integer('field_number')->after('stadium_id'); // Thêm cột số sân
             $table->enum('schedule_type', ['tournament', 'individual']); // Loại lịch
             $table->dateTime('match_date'); // Ngày giờ thi đấu
             $table->string('location'); // Địa điểm (có thể khác với sân)
             $table->string('scoreTeam1')->nullable(); // Kết quả team 1(có thể null nếu chưa thi đấu)
             $table->string('scoreTeam2')->nullable(); // Kết quả team 2(có thể null nếu chưa thi đấu)
+            $table->enum('status', ['scheduled', 'ongoing', 'completed', 'canceled'])->default('scheduled'); // Trạng thái
             $table->timestamps();
 
             // Liên kết khóa ngoại

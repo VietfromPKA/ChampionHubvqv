@@ -39,7 +39,7 @@
         <section class="schedule-section">
             <h2 class="section-title">Lịch thi đấu</h2>
             <div class="match-card-container">
-                @foreach ($tournament->matchSchedules->sortBy('match_date') as $match)
+                @foreach ($tournament->matchSchedules->where('status', 'scheduled')->sortBy('match_date') as $match)
                     <div class="match-card">
                         <div class="match-header">
                             <span class="match-date">{{ date('d/m/Y H:i', strtotime($match->match_date)) }}</span>
@@ -51,45 +51,50 @@
                                 <span class="vs">vs</span>
                                 <span class="team">{{ $match->team2->name }}</span>
                             </div>
-                            <p class="match-info"><strong>Sân:</strong> {{ $match->stadium->name }} - Số
-                                {{ $match->field_number }}</p>
+                            <p class="match-info"><strong>Sân:</strong> {{ $match->stadium->name }} - Số{{ $match->field_number }}</p>
                             <p class="match-info"><strong>Địa điểm:</strong> {{ $match->location }}</p>
                         </div>
-                        <div class="match-actions">
-                            <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Chỉnh sửa</a>
-                            <a class="open-score-form btn btn-primary" data-match-id="{{ $match->id }}">Cập nhật tỷ số</a>
-                            <form action="{{ route('matches.destroy', $match->id) }}" method="POST"
-                                onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Xóa</button>
-                            </form>
-                        </div>
+                        @if (auth()->check() && auth()->user()->id === $tournament->user_id) 
+
+                            <div class="match-actions">
+                                <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Chỉnh sửa</a>
+                                <a class="open-score-form btn btn-primary" data-match-id="{{ $match->id }}">Cập nhật tỷ số</a>
+                                <form action="{{ route('matches.destroy', $match->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Xóa</button>
+                                </form>
+                            </div>
+
+                            <div id="scoreForm" class="hidden">
+                                <div>
+                                    <h2>Cập Nhật Tỉ Số</h2>
+                                    <form id="scoreUpdateForm" method="POST" action="{{ route('matches.updateScore') }}">
+                                        @csrf                                        
+                                        <input type="hidden" name="match_id" id="matchId" value="{{ $match->id }}">
+                                        <input type="hidden" name="tournament_id" id="tournamentId" value="{{ $tournament->id }}">
+                                        <div>
+                                            <label for="scoreTeam1">Tỉ số đội 1</label>
+                                            <input type="number" name="scoreTeam1" id="scoreTeam1" placeholder="0" required>
+                                        </div>
+                                        <div>
+                                            <label for="scoreTeam2">Tỉ số đội 2</label>
+                                            <input type="number" name="scoreTeam2" id="scoreTeam2" placeholder="0" required>
+                                        </div>
+                                        <div class="flex justify-between mt-6">
+                                            <button type="button" id="closeFormBtn">Hủy</button>
+                                            <button type="submit">Cập Nhật</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 @endforeach
             </div>
         </section>
 
-        <div id="scoreForm" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-lg">
-            <div class="w-full max-w-md p-8 bg-white rounded-3xl shadow-2xl transform transition-all scale-95 hover:scale-100">
-                <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-6">Cập Nhật Tỉ Số</h2>
-                <form id="scoreUpdateForm" class="space-y-6">
-                    <input type="hidden" id="matchId">
-                    <div>
-                        <label class="block text-lg font-semibold text-gray-700 mb-2">Tỉ số đội 1</label>
-                        <input type="number" id="scoreTeam1" class="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-md placeholder-gray-400" placeholder="0">
-                    </div>
-                    <div>
-                        <label class="block text-lg font-semibold text-gray-700 mb-2">Tỉ số đội 2</label>
-                        <input type="number" id="scoreTeam2" class="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-md placeholder-gray-400" placeholder="0">
-                    </div>
-                    <div class="flex justify-between mt-6">
-                        <button type="button" id="closeFormBtn" class="px-6 py-3 text-gray-700 bg-gray-300 rounded-2xl hover:bg-gray-400 transition-all shadow-md">Hủy</button>
-                        <button type="submit" class="px-6 py-3 text-white bg-blue-600 rounded-2xl hover:bg-blue-700 transition-all shadow-lg">Cập Nhật</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
 
         <!-- Bảng xếp hạng -->
         <section class="standings-section">
@@ -126,9 +131,10 @@
 
         <!-- Hành động -->
         <div class="tournament-actions">
-            <a href="{{ route('matches.create', ['tournamentId' => $tournament->id]) }}" class="btn action-btn">Tạo trận
-                đấu</a>
-            <a href="{{ route('user.index') }}" class="btn action-btn">Quay lại</a>
+            @if (auth()->check() && auth()->user()->id === $tournament->user_id) 
+                <a href="{{ route('matches.create', ['tournamentId' => $tournament->id]) }}" class="btn action-btn">Tạo trận đấu</a>
+            @endif
+            <a href="{{ url()->previous() }}" class="btn action-btn">Quay lại</a>
         </div>
     </div>
 

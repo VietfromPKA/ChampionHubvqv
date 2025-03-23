@@ -13,47 +13,22 @@
 <body class="body">
     <header class="header">
         <nav class="navbar">
-            <a href="/" class="navbar-logo">
-                <img src="{{ asset('images/logoWA.svg') }}" alt="Logo" id="logo">
-            </a>
+            <a href="/" class="navbar-logo"><img src="{{ asset('images/logoWA.svg') }}" alt="Logo" id="logo"></a>
             <ul class="navbar-menu">
-                <li class="navbar-item">
-                    <a href="/" class="navbar-link">Trang chủ</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ route('public.teams.index')}}" class="navbar-link">Danh sách đội bóng</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="{{ route('stadiums.index') }}" class="navbar-link">Sân bóng</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="" class="navbar-link">Tin tức</a>
-                </li>
-
+                <li class="navbar-item"><a href="{{ route('public.tournaments.index')}}" class="navbar-link">Trang chủ</a></li>
+                <li class="navbar-item"><a href="{{ route('public.teams.index')}}" class="navbar-link">Danh sách đội bóng</a></li>
+                <li class="navbar-item"><a href="{{ route('public.stadiums.index') }}" class="navbar-link">Sân bóng</a></li>
+                <li class="navbar-item"><a href="" class="navbar-link">Tin tức</a></li>
                 @if(auth()->check())
-                    <li class="navbar-item">
-                        <a href="{{ route('tournament.index') }}" class="navbar-link">Quản lý giải đấu</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a href="{{ route('team.index') }}" class="navbar-link">Quản lý đội bóng</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a href="{{ route('user.index') }}" class="navbar-link">{{ auth()->user()->name }}</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a href="#" class="navbar-link"><i class="fa-solid fa-bell"></i></a>
-                    </li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                    <li class="navbar-item"><a href="{{ route('tournaments.index') }}" class="navbar-link">Quản lý giải đấu</a></li>
+                    <li class="navbar-item"><a href="{{ route('teams.index') }}" class="navbar-link">Quản lý đội bóng</a></li>
+                    <li class="navbar-item"><a href="{{ route('user.index') }}" class="navbar-link">{{ auth()->user()->name }}</a></li>
+                    <li class="navbar-item"><a href="#" class="navbar-link"><i class="fa-solid fa-bell"></i></a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
                 @else
-                    <!-- Hiển thị Đăng nhập và Đăng ký nếu chưa đăng nhập -->
-                    <li class="navbar-item">
-                        <a href="{{ route('login') }}" class="navbar-link">Đăng nhập</a>
-                    </li>
+                    <li class="navbar-item"><a href="{{ route('login') }}" class="navbar-link">Đăng nhập</a></li>
                 @endif
             </ul>
-
         </nav>
     </header>
 

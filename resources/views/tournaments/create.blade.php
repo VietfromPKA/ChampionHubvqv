@@ -7,7 +7,7 @@
 <div class="container create-tournament">
     <h1 class="page-title">Tạo mới giải đấu</h1>
 
-    <form action="{{ route('tournament.store') }}" method="POST" class="tournament-form">
+    <form action="{{ route('tournaments.store') }}" method="POST" class="tournament-form">
         @csrf
 
         <div class="form-group">

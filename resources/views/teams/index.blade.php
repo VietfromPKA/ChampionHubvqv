@@ -7,7 +7,7 @@
 @section('content')
 <div class="team-list-container">
     <h1 class="page-title">Danh sách đội bóng</h1>
-    <a href="{{ route('team.create') }}" class="add-team-btn">Thêm đội bóng</a>
+    <a href="{{ route('teams.create') }}" class="add-team-btn">Thêm đội bóng</a>
 
     <table class="team-table" id="team-table">
         <thead>
@@ -25,17 +25,9 @@
                     <td>{{ $team->coach_name }}</td>
                     <td>{{ $team->tournament->name }}</td>
                     <td class="action-buttons">
-                        <!-- Xem Danh Sách cầu thủ -->
-                        <form action="{{ route('players.index', $team->id) }}" method="GET">
-                            <button type="submit" class="action-btn">Danh sách cầu thủ</button>
-
-                        <!-- Sửa đội bóng -->
-                        <form action="{{ route('team.edit', $team->id) }}" method="GET">
-                            <button type="submit" class="edit-button">Sửa</button>
-                        </form>
-
-                        <!-- Xóa đội bóng -->
-                        <form action="{{ route('team.destroy', $team->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('teams.player.index', ['team_id' => $team->id]) }}"><button type="submit" class="action-btn">Danh sách cầu thủ</button></a>
+                        <a href="{{ route('teams.edit', $team->id) }}"><button type="submit" class="edit-button">Sửa</button></a>
+                        <form action="{{ route('teams.destroy', $team->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="action-btn delete-btn">Xóa</button>

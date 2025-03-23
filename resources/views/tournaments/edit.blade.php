@@ -7,7 +7,7 @@
 <div class="container edit-tournament">
     <h1 class="page-title">Sửa giải đấu</h1>
 
-    <form action="{{ route('tournament.update', $tournament->id) }}" method="POST" class="tournament-form">
+    <form action="{{ route('tournaments.update', $tournament->id) }}" method="POST" class="tournament-form">
         @csrf
         @method('PUT')
 
@@ -18,14 +18,12 @@
 
         <div class="form-group">
             <label for="start_date" class="form-label">Ngày bắt đầu:</label>
-            <input type="date" name="start_date" id="start_date" class="form-input"
-                value="{{ $tournament->start_date }}" required>
+            <input type="date" name="start_date" id="start_date" class="form-input" value="{{ $tournament->start_date }}" required>
         </div>
 
         <div class="form-group">
             <label for="end_date" class="form-label">Ngày kết thúc:</label>
-            <input type="date" name="end_date" id="end_date" class="form-input" value="{{ $tournament->end_date }}"
-                required>
+            <input type="date" name="end_date" id="end_date" class="form-input" value="{{ $tournament->end_date }}" required>
         </div>
 
         <button type="submit" class="btn-submit">Cập nhật</button>

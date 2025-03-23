@@ -13,13 +13,13 @@ class StadiumController extends Controller
     public function index()
     {
         $stadiums = Stadium::all();
-        return view('stadiums.index', compact('stadiums'));
+        return view('public.stadiums.index', compact('stadiums'));
     }
 
     // Hiển thị form thêm sân bóng
     public function create()
     {
-        return view('stadiums.form', ['stadium' => null]); // Đảm bảo form.blade.php không lỗi
+        return view('public.stadiums.form', ['stadium' => null]); // Đảm bảo form.blade.php không lỗi
     }
 
     // Xử lý thêm mới sân bóng
@@ -40,7 +40,7 @@ class StadiumController extends Controller
     public function edit($id)
     {
         $stadium = Stadium::findOrFail($id);
-        return view('stadiums.form', compact('stadium'));
+        return view('public.stadiums.form', compact('stadium'));
     }
 
     // Xử lý cập nhật sân bóng
@@ -70,22 +70,19 @@ class StadiumController extends Controller
 
     // Hiển thị chi tiết sân bóng
     public function show($id)
-{
-    $stadium = Stadium::with('images')->findOrFail($id);
-    
-    $fieldCount = $stadium->field_count;
+    {
+        $stadium = Stadium::with('images')->findOrFail($id);
+        
+        $fieldCount = $stadium->field_count;
 
-    // Lấy danh sách trận đấu của sân này, sắp xếp theo ngày & giờ thi đấu
-    $matches = MatchSchedule::where('stadium_id', $id)
-        ->orderBy('match_date') // Sắp xếp theo ngày + giờ đấu
-        ->with(['team1', 'team2', 'tournament']) // Load thông tin đội bóng và giải đấu
-        ->get();
+        // Lấy danh sách trận đấu của sân này, sắp xếp theo ngày & giờ thi đấu
+        $matches = MatchSchedule::where('stadium_id', $id)
+            ->orderBy('match_date') // Sắp xếp theo ngày + giờ đấu
+            ->with(['team1', 'team2', 'tournament']) // Load thông tin đội bóng và giải đấu
+            ->get();
 
-    return view('stadiums.show', compact('stadium', 'matches', 'fieldCount'));
-}
-
-
-
+        return view('public.stadiums.show', compact('stadium', 'matches', 'fieldCount'));
+    }
 
     public function uploadImage(Request $request, $stadiumId)
     {
@@ -128,6 +125,11 @@ class StadiumController extends Controller
         $image->delete();
 
         return redirect()->route('stadiums.show', $stadium->id)->with('success', 'Ảnh đã được xóa thành công!');
+    }
+
+    public function stadium(){
+        $stadiums = Stadium::all();
+        return view('public.stadiums.index', compact('stadiums'));
     }
 
 }

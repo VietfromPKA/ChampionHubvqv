@@ -10,15 +10,28 @@ use App\Imports\PlayersImport;
 
 class PlayerController extends Controller
 {
-    public function index($teamId)
-    {
-        // Lấy đội bóng dựa vào ID
-        $team = Team::with('players')->findOrFail($teamId);
-        $players = $team->players;
+    // public function index($teamId)
+    // {
+    //     // Lấy đội bóng dựa vào ID
+    //     $team = Team::with('players')->findOrFail($teamId);
+    //     $players = $team->players;
 
-        // Truyền dữ liệu tới view
-        return view('players.index', compact('team', 'players'));
+    //     // Truyền dữ liệu tới view
+    //     return view('player.index', compact('team', 'players'));
+    // }
+
+    public function index(Request $request)
+    {
+        $teamId = $request->query('team_id'); // Lấy team_id từ URL
+        dd($teamId); // Kiểm tra giá trị
     }
+    
+    
+
+
+
+
+
 
     public function create($teamId)
     {

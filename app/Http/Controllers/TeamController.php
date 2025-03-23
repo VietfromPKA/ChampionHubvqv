@@ -12,14 +12,12 @@ class TeamController extends Controller
 {
     public function index()
     {
-        // Lấy đội bóng của người dùng hiện tại và bao gồm cả thông tin giải đấu
         $teams = Auth::user()->teams()->with('tournament')->get(); 
         return view('teams.index', compact('teams'));
     }
 
     public function create()
     {
-        // Lấy tất cả giải đấu để hiển thị trong form tạo đội bóng
         $tournaments = Tournament::all();
         return view('teams.create', compact('tournaments'));
     }
@@ -40,12 +38,17 @@ class TeamController extends Controller
         $team->tournament_id = $request->tournament_id; // Liên kết đội bóng với giải đấu
         $team->save();
 
-        return redirect()->route('team.index')->with('success', 'Đội bóng đã được thêm.');
+        return redirect()->route('teams.index')->with('success', 'Đội bóng đã được thêm.');
+    }
+
+    public function show($id)
+    {
+        // $team = Auth::user()->teams()->findOrFail($id);
+        // return view('teams.show', compact('team'));
     }
 
     public function edit($id)
     {
-        // Lấy đội bóng của người dùng hiện tại và thông tin giải đấu
         $team = Auth::user()->teams()->findOrFail($id);
         $tournaments = Tournament::all();
         return view('teams.edit', compact('team', 'tournaments'));
@@ -58,23 +61,29 @@ class TeamController extends Controller
             'coach_name' => 'nullable|string|max:255',
             'tournament_id' => 'required|exists:tournaments,id',
         ]);
-
-        // Cập nhật đội bóng
         $team = Auth::user()->teams()->findOrFail($id);
         $team->name = $request->name;
         $team->coach_name = $request->coach_name;
         $team->tournament_id = $request->tournament_id;
         $team->save();
-
-        return redirect()->route('team.index')->with('success', 'Đội bóng đã được cập nhật.');
+        return redirect()->route('teams.index')->with('success', 'Đội bóng đã được cập nhật.');
     }
 
     public function destroy($id)
     {
-        // Xóa đội bóng của người dùng hiện tại
         $team = Auth::user()->teams()->findOrFail($id);
         $team->delete();
+        return redirect()->route('teams.index')->with('success', 'Đội bóng đã được xóa.');
+    }
 
-        return redirect()->route('team.index')->with('success', 'Đội bóng đã được xóa.');
+    public function team(){
+        $teams = Team::all();
+        return view('public.teams.index', compact('teams'));
+    }
+
+    public function player($team_id){
+        $team = Team::findOrFail($team_id);
+        $players = $team->players;
+        return view('players.index', compact('team', 'players'));
     }
 }

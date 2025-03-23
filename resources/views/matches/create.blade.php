@@ -33,18 +33,14 @@
                 <label for="stadium_id">Chọn Sân Đấu</label>
                 <select name="stadium_id" id="stadium_id" class="form-control" required>
                     @foreach ($stadiums as $stadium)
-                        <option value="{{ $stadium->id }}" data-fields="{{ $stadium->field_count }}">
-                            {{ $stadium->name }} ({{ $stadium->field_count }} sân)
-                        </option>
+                        <option value="{{ $stadium->id }}" data-fields="{{ $stadium->field_count }}">{{ $stadium->name }} ({{ $stadium->field_count }} sân)</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="field_number">Số Sân</label>
-                <select name="field_number" id="field_number" class="form-control" required>
-                    <!-- Tự động cập nhật khi chọn sân -->
-                </select>
+                <select name="field_number" id="field_number" class="form-control" required></select>
             </div>
 
             <div class="form-group">

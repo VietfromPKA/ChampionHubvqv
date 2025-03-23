@@ -7,7 +7,7 @@
 @section('content')
     <h1 class="page-title">Sửa đội bóng</h1>
 
-    <form action="{{ route('team.update', $team->id) }}" method="POST" class="team-form">
+    <form action="{{ route('teams.update', $team->id) }}" method="POST" class="team-form">
         @csrf
         @method('PUT')
 

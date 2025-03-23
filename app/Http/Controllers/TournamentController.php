@@ -11,7 +11,6 @@ class TournamentController extends Controller
     // Hiển thị danh sách giải đấu của người dùng
     public function index()
     {
-        // Lấy tất cả các giải đấu của người dùng hiện tại
         $tournaments = Auth::user()->tournaments;
         return view('tournaments.index', compact('tournaments'));
     }
@@ -39,7 +38,7 @@ class TournamentController extends Controller
         $tournament->end_date = $request->end_date;
         $tournament->save();
 
-        return redirect()->route('tournament.index')->with('success', 'Giải đấu đã được thêm.');
+        return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được thêm.');
     }
 
     // Hiển thị form chỉnh sửa giải đấu
@@ -64,7 +63,7 @@ class TournamentController extends Controller
         $tournament->end_date = $request->end_date;
         $tournament->save();
 
-        return redirect()->route('tournament.index')->with('success', 'Giải đấu đã được cập nhật.');
+        return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được cập nhật.');
     }
 
     // Xóa giải đấu
@@ -72,21 +71,20 @@ class TournamentController extends Controller
     {
         $tournament = Auth::user()->tournaments()->findOrFail($id);
         $tournament->delete();
-
-        return redirect()->route('tournament.index')->with('success', 'Giải đấu đã được xóa.');
+        return redirect()->route('tournaments.index')->with('success', 'Giải đấu đã được xóa.');
     }
 
     public function show($id)
     {
-        $tournament = Tournament::with(['games', 'teams'])->findOrFail($id);
-
-        // Kiểm tra nếu người dùng hiện tại là người tạo giải đấu
-        if ($tournament->user_id !== Auth::id()) {
-            return redirect()->route('tournament.index')->with('error', 'Bạn không có quyền xem hoặc chỉnh sửa giải đấu này.');
-        }
-
+        $tournament = Tournament::with(['teams'])->findOrFail($id);
         return view('tournaments.show', compact('tournament'));
     }
 
+    public function tournament()
+    {
+        // Lấy danh sách tất cả các giải đấu
+        $tournaments = Tournament::all();
+        return view('public.tournaments.index', compact('tournaments'));
+    }
 
 }

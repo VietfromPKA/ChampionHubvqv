@@ -32,7 +32,7 @@
         <button type="submit">Đăng nhập</button>
         <!-- Liên kết "Quên mật khẩu" -->
         <div class="forgot-password">
-            <a href="{{ route('password.request') }}">Quên mật khẩu?</a>
+            <a href="{{ route('password.forgot') }}">Quên mật khẩu?</a>
         </div>
         <!-- Liên kết "Đăng ký" -->
         <div class="register">

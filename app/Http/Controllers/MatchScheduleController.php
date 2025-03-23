@@ -20,11 +20,9 @@ class MatchScheduleController extends Controller
     // Hiển thị form tạo lịch thi đấu
     public function create(Request $request)
     {
-        // Kiểm tra nếu có tournamentId thì lấy thông tin giải đấu
         $tournament = Tournament::with('teams')->findOrFail($request->tournamentId);
         $teams = $tournament->teams; // Chỉ lấy đội bóng thuộc giải đấu này
         $stadiums = Stadium::all(); // Lấy danh sách sân đấu
-
         return view('matches.create', compact('tournament', 'teams', 'stadiums'));
     }
 
@@ -56,8 +54,7 @@ class MatchScheduleController extends Controller
             'location' => $request->location,
         ]);
 
-        return redirect()->route('tournament.show', ['id' => $request->tournament_id])
-            ->with('success', 'Lịch thi đấu đã được tạo thành công!');
+        return redirect()->route('tournaments.show', ['tournament' => $request->tournament_id])->with('success', 'Lịch thi đấu đã được tạo thành công!');
     }
 
     // Hiển thị chi tiết một lịch thi đấu
@@ -109,20 +106,35 @@ class MatchScheduleController extends Controller
         ]);
     
         // Chuyển hướng về trang chi tiết giải đấu
-        return redirect()->route('tournament.show', ['id' => $match->tournament_id])
-            ->with('success', 'Lịch thi đấu đã được cập nhật!');
+        return redirect()->route('tournaments.show', ['tournament' => $match->tournament_id])->with('success', 'Lịch thi đấu đã được cập nhật!');
     }
 
 
     // Xóa một lịch thi đấu
     public function destroy($id)
-{
-    $match = MatchSchedule::findOrFail($id);
-    $tournamentId = $match->tournament_id; // Lấy tournament_id trước khi xóa
-    $match->delete();
+    {
+        $match = MatchSchedule::findOrFail($id);
+        $tournamentId = $match->tournament_id; // Lấy tournament_id trước khi xóa
+        $match->delete();
 
-    // Chuyển hướng về trang chi tiết giải đấu
-    return redirect()->route('tournament.show', ['id' => $tournamentId])
-        ->with('success', 'Lịch thi đấu đã được xóa!');
-}
+        // Chuyển hướng về trang chi tiết giải đấu
+        return redirect()->route('tournaments.show', ['tournament' => $tournamentId])->with('success', 'Lịch thi đấu đã được xóa!');
+    }
+
+    // Cập nhật tỉ số trận đấu
+    public function updateScore(Request $request)
+    {
+        $request->validate([
+            'scoreTeam1' => 'required|integer|min:0',
+            'scoreTeam2' => 'required|integer|min:0',
+        ]);
+        $match = MatchSchedule::findOrFail($request->match_id);
+        $match->update([
+            'scoreTeam1' => $request->scoreTeam1,
+            'scoreTeam2' => $request->scoreTeam2,
+            'status' => 'completed',
+        ]);
+
+        return redirect()->route('tournaments.show', ['tournament' => $request->tournament_id])->with('success', 'Tỉ số trận đấu đã được cập nhật!');
+    }
 }

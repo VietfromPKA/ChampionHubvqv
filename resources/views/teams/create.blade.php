@@ -7,7 +7,7 @@
 @section('content')
     <h1 class="page-title">Thêm đội bóng</h1>
 
-    <form action="{{ route('team.store') }}" method="POST" class="team-form">
+    <form action="{{ route('teams.store') }}" method="POST" class="team-form">
         @csrf
 
         <div class="form-group">

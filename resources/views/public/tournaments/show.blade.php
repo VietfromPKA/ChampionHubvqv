@@ -57,7 +57,7 @@
         </table>
     @endif
 
-    <a href="{{ route('public.tournaments.index') }}" class="back-link">Quay lại giải đấu</a>
+    <a href="" class="back-link">Quay lại giải đấu</a>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

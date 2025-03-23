@@ -20,11 +20,6 @@ class Tournament extends Model
     {
         return $this->belongsTo(User::class);//
     }
-    public function games()
-    {
-
-        return $this->hasMany(Game::class);
-    }
 
     public function matchSchedules()
     {

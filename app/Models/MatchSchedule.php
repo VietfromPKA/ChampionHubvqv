@@ -17,6 +17,9 @@ class MatchSchedule extends Model
         'field_number', 
         'schedule_type', 
         'match_date', 
+        'scoreTeam1', 
+        'scoreTeam2', 
+        'status',
         'location'
     ];
 
