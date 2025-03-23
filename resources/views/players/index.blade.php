@@ -30,14 +30,11 @@
                             <td>{{ $player->jersey_number }}</td>
                             <td>{{ $player->email }}</td>
                             <td>
-                                <a href="{{ route('players.edit', ['teamId' => $team->id, 'playerId' => $player->id]) }}"
-                                    class="btn btn-warning">Sửa</a>
-                                <form action="{{ route('players.destroy', ['teamId' => $team->id, 'playerId' => $player->id]) }}"
-                                    method="POST" style="display:inline;">
+                                <a href="{{ route('players.edit', ['teamId' => $team->id, 'playerId' => $player->id]) }}" class="btn btn-warning">Sửa</a>
+                                <form action="{{ route('players.destroy', ['teamId' => $team->id, 'playerId' => $player->id]) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Bạn có chắc chắn muốn xóa cầu thủ này không?')">Xóa</button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa cầu thủ này không?')">Xóa</button>
                                 </form>
                             </td>
                         </tr>
@@ -46,8 +43,7 @@
             </table>
         @endif
 
-        <a href="{{ route('players.create', $team->id) }}" class="btn btn-primary">Thêm cầu thủ</a>
-
-        <a href="{{ route('players.import', $team->id) }}" class="btn btn-primary">Thêm từ excel</a>
+        <a href="{{ route('players.create', ['team_id' => $team->id]) }}" class="btn btn-primary">Thêm cầu thủ</a>
+        <a href="" class="btn btn-primary">Thêm từ excel</a>
     </div>
 @endsection

@@ -28,13 +28,11 @@ class PlayerController extends Controller
     
     
 
-
-
-
-
-
-    public function create($teamId)
-    {
+    public function create(Request $request)
+    {        
+        dd($request->all());
+        $teamId = $request->query('team_id');
+        dd($teamId);
         $team = Team::findOrFail($teamId);
         return view('players.create', compact('team'));
     }

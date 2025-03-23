@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\PublicController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\StadiumController;
@@ -49,11 +47,10 @@ Route::prefix('auth')->group(function () {
 
 
 // Các route liên quan đến thông tin public
-Route::get('/', fn() => view('public.tournament.index'));
+Route::get('/', fn() => view('public.tournaments.index'));
 Route::get('/list_tournament', [TournamentController::class, 'tournament'])->name('public.tournaments.index');
 Route::get('/list_team', [TeamController::class, 'team'])->name('public.teams.index');
 Route::get('/list_stadium', [StadiumController::class, 'stadium'])->name('public.stadiums.index');
-
 
 
 // Các route liên quan đến tournament
@@ -68,8 +65,11 @@ Route::resource('stadiums', StadiumController::class);
 
 // Các route liên quan đến match
 Route::resource('matches', MatchScheduleController::class);
-// cập nhật tỉ số trận đấu
-Route::post('/matches/update-score', [MatchScheduleController::class, 'updateScore'])->name('matches.updateScore');
+Route::post('/matches/update-score', [MatchScheduleController::class, 'updateScore'])->name('matches.updateScore'); // cập nhật tỉ số trận đấu
+
+// Các route liên quan đến player
+Route::resource('players', PlayerController::class);
+
 
 // Các route liên quan đến user
 Route::get('/profile', [UserController::class, 'profile'])->name('user.index');

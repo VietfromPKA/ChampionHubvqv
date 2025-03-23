@@ -117,12 +117,12 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $team->name }}</td>
-                            <td>{{ $team->matches_played }}</td>
-                            <td>{{ $team->wins }}</td>
-                            <td>{{ $team->draws }}</td>
-                            <td>{{ $team->losses }}</td>
-                            <td>{{ $team->goal_difference }}</td>
-                            <td>{{ $team->points }}</td>
+                            <td>{{ $team->matches()->count() }}</td>
+                            <td>{{ $team->winsCount() }}</td>
+                            <td>{{ $team->drawsCount() }}</td>
+                            <td>{{ $team->lossesCount() }}</td>
+                            <td>{{ $team->goalDifference() }}</td>
+                            <td>{{ $team->totalPoints() }}</td>
                         </tr>
                     @endforeach
                 </tbody>
