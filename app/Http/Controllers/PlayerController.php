@@ -140,6 +140,11 @@ class PlayerController extends Controller
         return view('players.import', compact('team'));
     }
 
+    // public function showImportForm($team_id) {
+    //     return view('players.import', compact('team_id'));
+    // }
+    
+
     // Xử lý import từ file Excel
     public function importPlayers(Request $request, $teamId)
     {

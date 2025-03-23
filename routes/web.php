@@ -70,13 +70,11 @@ Route::post('/matches/update-score', [MatchScheduleController::class, 'updateSco
 Route::get('/teams/{team_id}/players', [PlayerController::class, 'index'])->name('players.index');
 Route::get('/teams/{team_id}/players/create', [PlayerController::class, 'create'])->name('players.create');
 Route::post('/teams/{team_id}/players', [PlayerController::class, 'store'])->name('players.store');
-Route::get('/teams/{team_id}/players/{player}', [PlayerController::class, 'show'])->name('players.show');
-Route::get('/teams/{team_id}/player/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
+Route::get('/teams/{team_id}/players/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
 Route::put('/teams/{team_id}/players/{player}', [PlayerController::class, 'update'])->name('players.update');
 Route::delete('/teams/{team_id}/players/{player}', [PlayerController::class, 'delete'])->name('players.destroy');
 Route::get('/teams/{team_id}/players/import', [PlayerController::class, 'showImportForm'])->name('players.importForm');
-Route::post('/teams/{team_id}/players/import', [PlayerController::class, 'importPlayers'])->name('players.import');
-
+Route::post('/teams/{team_id}/players/import', [PlayerController::class, 'import'])->name('players.import');
 
 // Các route liên quan đến user
 Route::get('/profile', [UserController::class, 'profile'])->name('user.index');
