@@ -25,7 +25,7 @@
                     <td>{{ $team->coach_name }}</td>
                     <td>{{ $team->tournament->name }}</td>
                     <td class="action-buttons">
-                        <a href="{{ route('teams.player.index', ['team_id' => $team->id]) }}"><button type="submit" class="action-btn">Danh sách cầu thủ</button></a>
+                        <a href="{{ route('players.index', $team->id) }}"><button type="submit" class="action-btn">Danh sách cầu thủ</button></a>
                         <a href="{{ route('teams.edit', $team->id) }}"><button type="submit" class="edit-button">Sửa</button></a>
                         <form action="{{ route('teams.destroy', $team->id) }}" method="POST" style="display:inline;">
                             @csrf

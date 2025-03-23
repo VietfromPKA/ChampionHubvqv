@@ -10,29 +10,18 @@ use App\Imports\PlayersImport;
 
 class PlayerController extends Controller
 {
-    // public function index($teamId)
-    // {
-    //     // Lấy đội bóng dựa vào ID
-    //     $team = Team::with('players')->findOrFail($teamId);
-    //     $players = $team->players;
-
-    //     // Truyền dữ liệu tới view
-    //     return view('player.index', compact('team', 'players'));
-    // }
-
-    public function index(Request $request)
+    public function index($teamId)
     {
-        $teamId = $request->query('team_id'); // Lấy team_id từ URL
-        dd($teamId); // Kiểm tra giá trị
+        // Lấy đội bóng dựa vào ID
+        $team = Team::with('players')->findOrFail($teamId);
+        $players = $team->players;
+
+        // Truyền dữ liệu tới view
+        return view('players.index', compact('team', 'players'));
     }
     
-    
-
-    public function create(Request $request)
+    public function create($teamId)
     {        
-        dd($request->all());
-        $teamId = $request->query('team_id');
-        dd($teamId);
         $team = Team::findOrFail($teamId);
         return view('players.create', compact('team'));
     }
@@ -72,9 +61,13 @@ class PlayerController extends Controller
         }
     }
 
+    public function show($teamId, $playerId)
+    {
+        //
+    }
+
     public function edit($teamId, $playerId)
     {
-        // Lấy thông tin đội và cầu thủ
         $team = Team::findOrFail($teamId);
         $player = Player::findOrFail($playerId);
 
@@ -120,7 +113,7 @@ class PlayerController extends Controller
         }
     }
 
-    public function destroy($teamId, $playerId)
+    public function delete($teamId, $playerId)
     {
         try {
             // Tìm cầu thủ cần xóa

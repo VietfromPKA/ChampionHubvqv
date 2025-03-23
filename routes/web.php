@@ -58,7 +58,6 @@ Route::resource('tournaments', TournamentController::class);
 
 // Các route liên quan đến team
 Route::resource('teams', TeamController::class);
-Route::get('/teams/{team_id}/players', [TeamController::class, 'player'])->name('teams.player.index');
 
 //Các route liên quan đến stadium
 Route::resource('stadiums', StadiumController::class);
@@ -68,7 +67,15 @@ Route::resource('matches', MatchScheduleController::class);
 Route::post('/matches/update-score', [MatchScheduleController::class, 'updateScore'])->name('matches.updateScore'); // cập nhật tỉ số trận đấu
 
 // Các route liên quan đến player
-Route::resource('players', PlayerController::class);
+Route::get('/teams/{team_id}/players', [PlayerController::class, 'index'])->name('players.index');
+Route::get('/teams/{team_id}/players/create', [PlayerController::class, 'create'])->name('players.create');
+Route::post('/teams/{team_id}/players', [PlayerController::class, 'store'])->name('players.store');
+Route::get('/teams/{team_id}/players/{player}', [PlayerController::class, 'show'])->name('players.show');
+Route::get('/teams/{team_id}/player/{player}/edit', [PlayerController::class, 'edit'])->name('players.edit');
+Route::put('/teams/{team_id}/players/{player}', [PlayerController::class, 'update'])->name('players.update');
+Route::delete('/teams/{team_id}/players/{player}', [PlayerController::class, 'delete'])->name('players.destroy');
+Route::get('/teams/{team_id}/players/import', [PlayerController::class, 'showImportForm'])->name('players.importForm');
+Route::post('/teams/{team_id}/players/import', [PlayerController::class, 'importPlayers'])->name('players.import');
 
 
 // Các route liên quan đến user
