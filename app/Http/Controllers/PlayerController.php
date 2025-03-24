@@ -19,9 +19,9 @@ class PlayerController extends Controller
         // Truyền dữ liệu tới view
         return view('players.index', compact('team', 'players'));
     }
-    
+
     public function create($teamId)
-    {        
+    {
         $team = Team::findOrFail($teamId);
         return view('players.create', compact('team'));
     }
@@ -143,17 +143,20 @@ class PlayerController extends Controller
     // public function showImportForm($team_id) {
     //     return view('players.import', compact('team_id'));
     // }
-    
+
 
     // Xử lý import từ file Excel
-    public function importPlayers(Request $request, $teamId)
+    public function importPlayers(Request $request, $team_id)
     {
+        // Validate file upload
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new PlayersImport($teamId), $request->file('file'));
+        // Import data using PlayersImport and pass team_id
+        Excel::import(new PlayersImport($team_id), $request->file('file'));
 
-        return redirect()->route('players.index', $teamId)->with('success', 'Nhập cầu thủ thành công!');
+        // Redirect back with success message
+        return redirect()->route('players.index', $team_id)->with('success', 'Nhập cầu thủ thành công!');
     }
 }

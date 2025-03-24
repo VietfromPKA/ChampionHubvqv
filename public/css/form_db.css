@@ -126,6 +126,8 @@ body {
 /* Labels với hiệu ứng float */
 label {
     display: block;
+    text-align: left;
+    margin-left: 1rem;
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
     font-weight: 600;

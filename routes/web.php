@@ -82,9 +82,10 @@ Route::prefix('/teams/{team_id}/players')->group(function () {
     Route::put('/{player}', [PlayerController::class, 'update'])->name('players.update');
     Route::delete('/{player}', [PlayerController::class, 'delete'])->name('players.destroy');
     Route::get('/import', [PlayerController::class, 'showImportForm'])->name('players.importForm');
-    Route::post('/import', [PlayerController::class, 'import'])->name('players.import');
+    Route::post('/import', [PlayerController::class, 'importPlayers'])->name('players.import');
 });
 
-
+// Route::get('/teams/{team_id}/players/import', [PlayerController::class, 'showImportForm'])->name('players.importForm');
+// Route::post('/teams/{team_id}/players/import', [PlayerController::class, 'importPlayers'])->name('players.import');
 // Các route liên quan đến user
 Route::get('/profile', [UserController::class, 'profile'])->name('user.index');

@@ -69,6 +69,11 @@
                             <div id="scoreForm" class="hidden">
                                 <div>
                                     <h2>Cập Nhật Tỉ Số</h2>
+                                    <div class="teams">
+                                        <span class="team">{{ $match->team1->name }}</span>
+                                        <span class="vs">vs</span>
+                                        <span class="team">{{ $match->team2->name }}</span>
+                                    </div>
                                     <form id="scoreUpdateForm" method="POST" action="{{ route('matches.updateScore') }}">
                                         @csrf                                        
                                         <input type="hidden" name="match_id" id="matchId" value="{{ $match->id }}">

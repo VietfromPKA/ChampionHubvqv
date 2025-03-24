@@ -23,7 +23,6 @@
                         <h2 class="tournament-name">{{ $tournament->name }}</h2>
                         <p class="tournament-date">📅 {{ $tournament->start_date }} đến {{ $tournament->end_date }}</p>
                         <p>⚽ {{ $tournament->teams->count() }} Đội</p>
-                        <button class="follow-btn">Theo dõi</button>
                     </div>
                     <div class="buttom_tt">
                         <div class="buttom-tt">

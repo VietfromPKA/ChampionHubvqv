@@ -339,3 +339,63 @@
 .hidden {
     display: none;
 }
+/* Score Form Styling */
+#scoreForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-bg);
+    padding: 20px;
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-lg);
+    z-index: 1000;
+}
+
+#scoreForm h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+}
+
+#scoreUpdateForm div {
+    margin-bottom: 10px;
+}
+
+#scoreUpdateForm label {
+    display: block;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+}
+
+#scoreUpdateForm input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+#scoreUpdateForm .flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+#scoreUpdateForm button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#scoreUpdateForm button[type="button"] {
+    background: var(--danger-color);
+    color: white;
+}
+
+#scoreUpdateForm button[type="submit"] {
+    background: var(--accent-color);
+    color: white;
+}
