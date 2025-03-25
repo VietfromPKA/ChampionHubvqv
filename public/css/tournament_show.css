@@ -99,13 +99,16 @@
 }
 
 .team-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: none; /* Ẩn danh sách đội ngũ mặc định */
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
     gap: 1.5rem;
 }
 
 .team-item {
     display: inline-block;
+    width: 30%;
     background-color: var(--light-bg);
     border: 2.5px dotted var(--accent-color);
     border-radius: var(--radius-md);
@@ -339,7 +342,7 @@
 .hidden {
     display: none;
 }
-/* Score Form Styling */
+
 #scoreForm {
     position: fixed;
     top: 50%;
@@ -350,6 +353,7 @@
     box-shadow: var(--shadow-lg);
     border-radius: var(--radius-lg);
     z-index: 1000;
+    touch-action: manipulation; 
 }
 
 #scoreForm h2 {
