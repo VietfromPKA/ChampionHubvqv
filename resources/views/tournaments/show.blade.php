@@ -39,8 +39,8 @@
         <section class="schedule-section">
             <h2 class="section-title">Lịch thi đấu</h2>
             <div class="match-card-container">
-                @foreach ($tournament->matchSchedules->where('status', 'scheduled')->sortBy('match_date') as $match)
-                    <div class="match-card">
+                @foreach ($tournament->matchSchedules->sortBy('match_date') as $match)
+                    <div class="match-card" data-match-id="{{ $match->id }}" data-team1-name="{{ $match->team1->name }}" data-team2-name="{{ $match->team2->name }}">
                         <div class="match-header">
                             <span class="match-date">{{ date('d/m/Y H:i', strtotime($match->match_date)) }}</span>
                             <span class="schedule-type">{{ ucfirst($match->schedule_type) }}</span>
@@ -48,14 +48,19 @@
                         <div class="match-body">
                             <div class="teams">
                                 <span class="team">{{ $match->team1->name }}</span>
-                                <span class="vs">vs</span>
+                                <span class="vs">
+                                    @if ($match->status === 'completed')
+                                        {{ $match->scoreTeam1 }} - {{ $match->scoreTeam2 }}
+                                    @else
+                                        vs
+                                    @endif
+                                </span>
                                 <span class="team">{{ $match->team2->name }}</span>
                             </div>
                             <p class="match-info"><strong>Sân:</strong> {{ $match->stadium->name }} - Số{{ $match->field_number }}</p>
                             <p class="match-info"><strong>Địa điểm:</strong> {{ $match->location }}</p>
                         </div>
                         @if (auth()->check() && auth()->user()->id === $tournament->user_id) 
-
                             <div class="match-actions">
                                 <a href="{{ route('matches.edit', $match->id) }}" class="btn btn-primary">Chỉnh sửa</a>
                                 <a class="open-score-form btn btn-primary" data-match-id="{{ $match->id }}">Cập nhật tỷ số</a>
@@ -65,26 +70,26 @@
                                     <button type="submit" class="btn btn-danger">Xóa</button>
                                 </form>
                             </div>
-
+                            <!-- Form cập nhật điểm số duy nhất -->
                             <div id="scoreForm" class="hidden">
                                 <div>
                                     <h2>Cập Nhật Tỉ Số</h2>
                                     <div class="teams">
-                                        <span class="team">{{ $match->team1->name }}</span>
+                                        <span id="scoreTeam1Name" class="team"></span>
                                         <span class="vs">vs</span>
-                                        <span class="team">{{ $match->team2->name }}</span>
+                                        <span id="scoreTeam2Name" class="team"></span>
                                     </div>
                                     <form id="scoreUpdateForm" method="POST" action="{{ route('matches.updateScore') }}">
                                         @csrf                                        
-                                        <input type="hidden" name="match_id" id="matchId" value="{{ $match->id }}">
+                                        <input type="hidden" name="match_id" id="matchId" value="">
                                         <input type="hidden" name="tournament_id" id="tournamentId" value="{{ $tournament->id }}">
                                         <div>
-                                            <label for="scoreTeam1">Tỉ số đội 1</label>
-                                            <input type="number" name="scoreTeam1" id="scoreTeam1" placeholder="0" required>
+                                            <label id="scoreTeam1Label" for="scoreTeam1">Tỉ số đội 1</label>
+                                            <input type="number" name="scoreTeam1" id="scoreTeam1" placeholder="0" required min="0">
                                         </div>
                                         <div>
-                                            <label for="scoreTeam2">Tỉ số đội 2</label>
-                                            <input type="number" name="scoreTeam2" id="scoreTeam2" placeholder="0" required>
+                                            <label id="scoreTeam2Label" for="scoreTeam2">Tỉ số đội 2</label>
+                                            <input type="number" name="scoreTeam2" id="scoreTeam2" placeholder="0" required min="0">
                                         </div>
                                         <div class="flex justify-between mt-6">
                                             <button type="button" id="closeFormBtn">Hủy</button>
@@ -161,6 +166,36 @@
 
         document.getElementById('closeFormBtn').addEventListener('click', function () {
             document.getElementById('scoreForm').classList.add('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const scoreForm = document.getElementById('scoreForm');
+            const matchCards = document.querySelectorAll('.match-card');
+            const openScoreFormButtons = document.querySelectorAll('.open-score-form');
+            const closeFormBtn = document.getElementById('closeFormBtn');
+
+            // Thêm sự kiện cho các nút "Cập nhật tỷ số"
+            openScoreFormButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const matchId = this.getAttribute('data-match-id');
+                    const matchCard = document.querySelector(`.match-card[data-match-id="${matchId}"]`);
+                    
+                    // Điền thông tin vào form
+                    document.getElementById('matchId').value = matchId;
+                    document.getElementById('scoreTeam1Name').textContent = matchCard.getAttribute('data-team1-name');
+                    document.getElementById('scoreTeam2Name').textContent = matchCard.getAttribute('data-team2-name');
+                    document.getElementById('scoreTeam1Label').textContent = `Tỉ số ${matchCard.getAttribute('data-team1-name')}`;
+                    document.getElementById('scoreTeam2Label').textContent = `Tỉ số ${matchCard.getAttribute('data-team2-name')}`;
+
+                    // Hiển thị form
+                    scoreForm.classList.remove('hidden');
+                });
+            });
+
+            // Đóng form
+            closeFormBtn.addEventListener('click', function() {
+                scoreForm.classList.add('hidden');
+            });
         });
     </script>
 @endsection
